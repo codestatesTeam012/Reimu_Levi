@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import {GlobalStyle} from './styles/createGlobalStyle'
+import {Provider} from 'react-redux'
+import {store} from './redux/store'
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalStyle />
-    <App />
+    <Provider store={store}>
+      <GlobalStyle />
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 )
