@@ -1,3 +1,4 @@
 export const colors = {
-  mainColor: 'test',
+  mainColorOrange: 'hsl(27,90%,55%)',
+  hoverColor: 'hsl(210,8%,90%)',
 }
