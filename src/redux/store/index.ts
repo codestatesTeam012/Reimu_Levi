@@ -22,3 +22,10 @@ const reservations = useAppSelector((state: RootState) => state.reservations.val
 
 export const useAppDispatch: () => AppDispatch = useDispatch
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector
+
+// thunk 안에서 사용할 타입
+export type CreateAsyncThunkTypes = {
+  dispatch: AppDispatch
+  state: RootState
+  rejectValue: string
+}
