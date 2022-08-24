@@ -1,7 +1,15 @@
 # 🐧 북극에 사는 펭귄 ~ !!
 
+<br>
 
-# 기술 스택 
+# 🐣 팀원 소개
+|정환민|지수정|
+|------|---|
+|![JHM](https://avatars.githubusercontent.com/u/65848374?s=150&v=4)|![JSJ](https://avatars.githubusercontent.com/u/55401378?s=150&v=4)|
+
+<br>
+
+# 🦄 기술 스택 
 
 ### 프레임 워크 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
