@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {addCount} from 'src/redux/reducers/testSlice'
-import {RootState, store, useAppDispatch, useAppSelector} from 'src/redux/store'
+import {RootState, useAppDispatch, useAppSelector} from 'src/redux/store'
 import {getAllTodo} from 'src/redux/thunkActions/testAction'
 
 const Example = () => {
@@ -12,7 +12,7 @@ const Example = () => {
   console.log(count)
 
   useEffect(() => {
-    store.dispatch(getAllTodo(null))
+    dispatch(getAllTodo(null))
   }, [])
 
   const handleUp = () => {
