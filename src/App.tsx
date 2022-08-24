@@ -1,5 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Footer from './components/Footer'
 import {Home, Example} from './pages'
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/test" element={<Example />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   )
 }
