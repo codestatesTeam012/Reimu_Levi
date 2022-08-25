@@ -8,11 +8,12 @@ import BasicButton from '../BasicButton/BasicButton'
 
 interface Props {
   isOpen: boolean
+  top?: number
 }
 
-const LeftSideBar = ({isOpen}: Props) => {
+const LeftSideBar = ({isOpen, top}: Props) => {
   return (
-    <LeftSideBarBox>
+    <LeftSideBarBox top={top}>
       <LeftNavBar isOpen={isOpen}>
         <Nav>
           <ol>
@@ -79,18 +80,18 @@ const LeftSideBar = ({isOpen}: Props) => {
 
 export default LeftSideBar
 
-const LeftSideBarBox = styled.div`
+const LeftSideBarBox = styled.div<{top?: number}>`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI Adjusted', 'Segoe UI', 'Liberation Sans',
     sans-serif;
-  z-index: 999;
   display: block;
   position: absolute;
+  /* position: fixed; */
   width: auto;
   right: auto;
-  top: 4.7rem;
-  left: 11.5rem;
-  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05),
-    0 2px 8px hsla(0, 0%, 0%, 0.05);
+  top: ${({top}) => top ?? 4.5}rem;
+  left: 0;
+  /* box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05),
+    0 2px 8px hsla(0, 0%, 0%, 0.05); */
   color: hsl(210, 8%, 25%);
   background-color: hsl(0, 0%, 100%);
   font-size: 1.2rem;
@@ -107,10 +108,10 @@ const LeftSideBarBox = styled.div`
 
 const LeftNavBar = styled.div<{isOpen: boolean}>`
   display: ${({isOpen}) => (isOpen ? 'block' : 'none')};
-  width: 24rem;
+  width: 20rem;
   height: 60rem;
-  box-shadow: 0 0 0 hsl(210deg 8% 5% / 5%);
-  transition: box-shadow ease-in-out 0.1s, transform ease-in-out 0.1s;
+  /* box-shadow: 0 0 0 hsl(210deg 8% 5% / 5%); */
+  /* transition: box-shadow ease-in-out 0.1s, transform ease-in-out 0.1s; */
   transform: translateZ(0);
   padding: 2.4rem 0rem;
 `
