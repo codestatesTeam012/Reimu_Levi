@@ -26,7 +26,7 @@ const Button = styled.button<ButtonType>`
   background-color: ${({bgColor}) => bgColor ?? 'white'};
   color: ${(props) => props.textColor ?? 'white'};
   font-size: ${(props) => props.fontSize ?? 1.7}rem;
-  border-radius: ${({borderRadius}) => borderRadius ?? 1}rem;
+  border-radius: ${({borderRadius}) => borderRadius ?? 0.5}rem;
   border: ${(props) => (props.borderColor ? `${props.borderColor} solid 1px` : 'none')};
   cursor: pointer;
   margin: 3px;
