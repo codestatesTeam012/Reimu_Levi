@@ -11,9 +11,11 @@ interface Props {
 
 const HamMenu = ({isOpen, setIsOpen}: Props) => {
   return (
-    <HamMenuBox onClick={() => setIsOpen(!isOpen)}>
-      {isOpen ? <IoMdClose /> : <AiOutlineMenu />}
-    </HamMenuBox>
+    <div>
+      <HamMenuBox onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? <IoMdClose /> : <AiOutlineMenu />}
+      </HamMenuBox>
+    </div>
   )
 }
 
@@ -24,6 +26,7 @@ const HamMenuBox = styled.div`
   padding: 0 1.6rem;
   align-items: center;
   justify-content: center;
+  padding-bottom: 0.3rem;
   height: 100%;
   font-size: 2rem;
   cursor: pointer;
