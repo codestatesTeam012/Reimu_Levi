@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+<<<<<<< HEAD
 import LeftSideBar from '../../components/LeftSideBar/LeftSideBar'
 import Logo from 'src/assets/svgComponents/Logo'
 import LogoCompany from 'src/assets/svgComponents/LogoCompany'
@@ -75,10 +76,16 @@ const Home = () => {
       </Container>
     </Main>
   )
+=======
+
+const Home = () => {
+  return <HomeBox></HomeBox>
+>>>>>>> dev
 }
 
 export default Home
 
+<<<<<<< HEAD
 const Main = styled.div`
   width: 100vw;
   min-height: 100vh;
@@ -282,4 +289,11 @@ const RecordText = styled.div`
   padding: 0.5rem;
   line-height: 1.2;
   margin-top: 1rem;
+=======
+const HomeBox = styled.div`
+  height: 450rem;
+  width: 100%;
+  fill: skyblue;
+  /* background-color: skyblue; */
+>>>>>>> dev
 `
