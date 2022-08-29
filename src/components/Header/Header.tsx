@@ -53,6 +53,7 @@ const Container = styled.div`
   position: relative;
   z-index: 999;
   display: flex;
+  top: 0;
   align-items: center;
   min-width: auto;
   width: 100%;
