@@ -1,7 +1,8 @@
 import React from 'react'
+import styled from 'styled-components'
 import Footer from 'src/components/Footer'
 import Header from 'src/components/Header/Header'
-import styled from 'styled-components'
+import Remirror from 'src/components/Remirror'
 
 const Write = () => {
   return (
@@ -34,7 +35,7 @@ const Write = () => {
                     <EditorDesc>
                       Include all the information someone would need to answer your question
                     </EditorDesc>
-                    <div>remirror</div>
+                    <Remirror />
                     <div>code</div>
                   </EditorContentWrapper>
                   <EditorContentWrapper>
@@ -44,11 +45,11 @@ const Write = () => {
                         Add up to 5 tags to describe what your question is about
                       </EditorDesc>
                     </div>
-                    <div className="tags-section2">question</div>
+                    <div className="tags-section2">Question</div>
                     <EditorInput type="text" placeholder="e.g. (ruby-on-rails .net sql-server" />
                   </EditorContentWrapper>
                 </Editor>
-                <button>button</button>
+                <EditorButton>Post your question</EditorButton>
               </EditorWrapper>
             </MainEditor>
             <MainSide>side</MainSide>
@@ -72,12 +73,6 @@ const Main = styled.div``
 
 const Container = styled.div`
   padding: 5rem 10%;
-  /* display: flex;
-  padding: 0 10%;
-  min-height: 55em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center; */
 `
 
 const MainHeader = styled.div`
@@ -103,7 +98,6 @@ const MainContents = styled.div`
   display: flex;
 `
 const MainEditor = styled.div`
-  /* flex: 3; */
   width: 80%;
 `
 
@@ -154,6 +148,15 @@ const EditorInput = styled.input`
     outline: 4px solid rgb(223, 238, 249);
     outline-offset: -2px;
   }
+`
+
+const EditorButton = styled.button`
+  background-color: rgb(9, 149, 255);
+  color: rgb(255, 255, 255);
+  box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 40%);
+  border: none;
+  padding: 1rem;
+  border-radius: 0.5rem;
 `
 
 const MainSide = styled.div`
