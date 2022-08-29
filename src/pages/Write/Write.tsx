@@ -1,58 +1,61 @@
 import React from 'react'
+import styled from 'styled-components'
 import Footer from 'src/components/Footer'
 import Header from 'src/components/Header/Header'
-import styled from 'styled-components'
-import Help from 'src/assets/svgComponents/Help'
+import Remirror from 'src/components/Remirror'
 
 const Write = () => {
   return (
     <Layout>
-      <Header />
-      <Container>
-        <MainTitle>
-          <Title>Ask a public question</Title>
-          <TitleImg
-            src="https://cdn.sstatic.net/Img/ask/background.svg?v=2e9a8205b368"
-            alt="title-image"
-          />
-        </MainTitle>
-        <Contents>
-          <LeftContent>
-            <MainContent>
-              <Editor>
-                <EditorSection>
-                  <EditorTitle>Title</EditorTitle>
-                  <EditorDesc>
-                    Be specific and imagine you’re asking a question to another person
-                  </EditorDesc>
-                  <Input
-                    type="text"
-                    placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
-                  />
-                </EditorSection>
-                <EditorSection>
-                  <EditorTitle className="title-main">Body</EditorTitle>
-                  <EditorDesc>
-                    Include all the information someone would need to answer your question
-                  </EditorDesc>
-                </EditorSection>
-                <EditorSection className="tags">
-                  <EditorTitle className="title-main">Tags</EditorTitle>
-                  <EditorDesc className="title-desc">
-                    Add up to 5 tags to describe what your question is about
-                  </EditorDesc>
-                  <Help />
-                  <Input type="text" placeholder="e.g. (ruby-on-rails .net sql-server" />
-                </EditorSection>
-              </Editor>
-              <LeftButton>
-                <Button>Review your question</Button>
-              </LeftButton>
-            </MainContent>
-          </LeftContent>
-          <RightContent className="notice"></RightContent>
-        </Contents>
-      </Container>
+      <Main>
+        <Container>
+          <MainHeader>
+            <MainHeaderTitle>Ask a public question</MainHeaderTitle>
+            <MainHeaderImg
+              src="https://cdn.sstatic.net/Img/ask/background.svg?v=2e9a8205b368"
+              alt="header-image"
+            />
+          </MainHeader>
+          <MainContents>
+            <MainEditor>
+              <EditorWrapper>
+                <Editor>
+                  <EditorContentWrapper>
+                    <EditorTitle>Title</EditorTitle>
+                    <EditorDesc>
+                      Be specific and imagine you’re asking a question to another person
+                    </EditorDesc>
+                    <EditorInput
+                      type="text"
+                      placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+                    />
+                  </EditorContentWrapper>
+                  <EditorContentWrapper>
+                    <EditorTitle>Body</EditorTitle>
+                    <EditorDesc>
+                      Include all the information someone would need to answer your question
+                    </EditorDesc>
+                    <Remirror />
+                    <div>code</div>
+                  </EditorContentWrapper>
+                  <EditorContentWrapper>
+                    <div className="tags-section1">
+                      <EditorTitle>Tags</EditorTitle>
+                      <EditorDesc>
+                        Add up to 5 tags to describe what your question is about
+                      </EditorDesc>
+                    </div>
+                    <div className="tags-section2">Question</div>
+                    <EditorInput type="text" placeholder="e.g. (ruby-on-rails .net sql-server" />
+                  </EditorContentWrapper>
+                </Editor>
+                <EditorButton>Post your question</EditorButton>
+              </EditorWrapper>
+            </MainEditor>
+            <MainSide>side</MainSide>
+          </MainContents>
+        </Container>
+      </Main>
       <Footer />
     </Layout>
   )
@@ -66,65 +69,72 @@ const Layout = styled.div`
   background: rgb(241, 242, 243);
 `
 
+const Main = styled.div``
+
 const Container = styled.div`
-  display: flex;
-  padding: 0 10%;
-  min-height: 55em;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-`
-const MainTitle = styled.div`
-  font-size: 2rem;
-  display: flex;
-  width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
-    'Open Sans', 'Helvetica Neue', sans-serif;
+  padding: 5rem 10%;
 `
 
-const Title = styled.h1`
-  flex: 4;
+const MainHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+`
+
+const MainHeaderTitle = styled.h3`
+  flex: 1;
   font-size: 2.8rem;
   display: flex;
   align-items: center;
-`
-const TitleImg = styled.img`
-  flex: 4;
-  min-width: 20rem;
-`
-
-const Contents = styled.div`
-  display: flex;
-`
-
-const LeftContent = styled.div`
-  flex: 5;
-  width: 80%;
-  box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.06), 0 2px 6px hsla(0, 0%, 0%, 0.06),
-    0 3px 8px hsla(0, 0%, 0%, 0.09);
-  margin-right: 2.5rem;
-  background-color: rgb(255, 255, 255);
-  border-radius: 0.3rem;
-  border-width: 0.1rem;
-`
-
-const MainContent = styled.div`
-  padding: 1.8rem;
-`
-
-const Editor = styled.div`
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
     'Open Sans', 'Helvetica Neue', sans-serif;
 `
 
-const RightContent = styled.div`
-  flex: 2;
-  background-color: #e6f2f6;
+const MainHeaderImg = styled.img`
+  flex: 1;
+  min-width: 20rem;
 `
 
-const Input = styled.input`
+const MainContents = styled.div`
+  display: flex;
+`
+const MainEditor = styled.div`
+  width: 80%;
+`
+
+const EditorWrapper = styled.div``
+
+const Editor = styled.div`
+  box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.06), 0 2px 6px hsla(0, 0%, 0%, 0.06),
+    0 3px 8px hsla(0, 0%, 0%, 0.09);
+  margin: 0 2.5rem 1.5rem 0;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.3rem;
+  border-width: 0.1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+  padding: 1rem 2rem;
+`
+
+const EditorContentWrapper = styled.div`
+  margin: 1.5rem 0;
+`
+
+const EditorTitle = styled.h1`
+  font-size: 1.5rem;
+  font-weight: 600;
+  padding: 0.7rem 0;
+`
+
+const EditorDesc = styled.div`
+  font-size: 1.3rem;
+  padding-bottom: 0.5rem;
+  color: rgb(88, 92, 96);
+`
+
+const EditorInput = styled.input`
   width: 100%;
   padding: 0.7rem;
+  margin: 0.5rem 0;
   border: 1px solid hsl(210, 8%, 75%);
   border-radius: 0.3rem;
 
@@ -140,32 +150,15 @@ const Input = styled.input`
   }
 `
 
-const EditorSection = styled.div`
-  margin-bottom: 1rem;
-
-  .tags {
-    display: flex;
-    flex-direction: row;
-  }
-`
-
-const EditorTitle = styled.h2`
-  font-size: 1.3rem;
-  font-weight: bold;
-  padding: 0.7rem 0;
-`
-const EditorDesc = styled.p`
-  font-size: 1.1rem;
-  padding-bottom: 0.5rem;
-`
-
-const LeftButton = styled.div``
-
-const Button = styled.button`
+const EditorButton = styled.button`
   background-color: rgb(9, 149, 255);
   color: rgb(255, 255, 255);
   box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 40%);
   border: none;
   padding: 1rem;
   border-radius: 0.5rem;
+`
+
+const MainSide = styled.div`
+  background-color: lightblue;
 `

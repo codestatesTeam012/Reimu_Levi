@@ -4,6 +4,7 @@ import Industry from 'src/assets/svgComponents/Industry'
 import People from 'src/assets/svgComponents/People'
 import SpotLock from 'src/assets/svgComponents/SpotLock'
 import SpotSearch from 'src/assets/svgComponents/SpotSearch'
+import Footer from 'src/components/Footer'
 
 const Home = () => {
   return (
@@ -70,6 +71,7 @@ const Home = () => {
           </Section4>
         </Wrapper>
       </Container>
+      <Footer />
     </Main>
   )
 }

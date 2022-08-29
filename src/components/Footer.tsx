@@ -1,6 +1,6 @@
 import React from 'react'
+import Logo from 'src/assets/svgComponents/Logo'
 import styled from 'styled-components'
-import Logo from '../assets/svgComponents/Logo'
 
 const Container = styled.div`
   width: 100%;
