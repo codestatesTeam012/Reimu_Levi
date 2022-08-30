@@ -3,8 +3,31 @@ import styled from 'styled-components'
 import Footer from 'src/components/Footer'
 import Header from 'src/components/Header/Header'
 import Remirror from 'src/components/Remirror'
+import PosticCard from 'src/components/PosticCard/PosticCard'
+import Pen from 'src/assets/svgComponents/Pen'
+import Help from 'src/assets/svgComponents/Help'
 
 const Write = () => {
+  const contents1 = [
+    {icon: Pen, content: '1. Summarize the problem'},
+    {icon: Pen, content: "2. Describe what you've tried"},
+    {icon: Pen, content: '3. Show some code'},
+  ]
+  const contents2 = [
+    {icon: Pen, content: 'Super user : Troubleshooting hardware and software issues'},
+    {
+      icon: Pen,
+      content: 'Software engineering : For software development methods and process questions',
+    },
+    {icon: Pen, content: 'Hardware recommendations'},
+    {icon: Pen, content: 'Software recommendations'},
+    {icon: Pen, content: 'Ask questions about the site on meta'},
+  ]
+  const contents3 = [
+    {icon: Pen, content: 'Find more information about how to ask a good question here'},
+    {icon: Pen, content: 'Visit the help center'},
+  ]
+
   return (
     <Layout>
       <Main>
@@ -35,24 +58,45 @@ const Write = () => {
                     <EditorDesc>
                       Include all the information someone would need to answer your question
                     </EditorDesc>
-                    <Remirror />
-                    <div>code</div>
+                    <RemirrorWrapper>
+                      <Remirror />
+                    </RemirrorWrapper>
+                    <MarkdownInfo>
+                      <MarkdownCodeWrapper>
+                        ``` <MarkdownCode>code</MarkdownCode> ```
+                      </MarkdownCodeWrapper>
+                      <MarkdownBold>**bold**</MarkdownBold>
+                      <MarkdownItalic>*italic*</MarkdownItalic>
+                      <MarkdownQuote>&gt;quote</MarkdownQuote>
+                    </MarkdownInfo>
                   </EditorContentWrapper>
                   <EditorContentWrapper>
-                    <div className="tags-section1">
-                      <EditorTitle>Tags</EditorTitle>
-                      <EditorDesc>
-                        Add up to 5 tags to describe what your question is about
-                      </EditorDesc>
-                    </div>
-                    <div className="tags-section2">Question</div>
+                    <TagsWrapper>
+                      <TagsInfo>
+                        <EditorTitle>Tags</EditorTitle>
+                        <EditorDesc>
+                          Add up to 5 tags to describe what your question is about
+                        </EditorDesc>
+                      </TagsInfo>
+                      <TagsHelp>
+                        <Help />
+                      </TagsHelp>
+                    </TagsWrapper>
                     <EditorInput type="text" placeholder="e.g. (ruby-on-rails .net sql-server" />
                   </EditorContentWrapper>
                 </Editor>
                 <EditorButton>Post your question</EditorButton>
               </EditorWrapper>
             </MainEditor>
-            <MainSide>side</MainSide>
+            <MainSide>
+              <RightBox>
+                <Postic>
+                  <PosticCard title="Step 1: Draft your question" contents={contents1} />
+                  <PosticCard title="Have a non-programming question?" contents={contents2} />
+                  <PosticCard title="More helpful links" contents={contents3} />
+                </Postic>
+              </RightBox>
+            </MainSide>
           </MainContents>
         </Container>
       </Main>
@@ -72,7 +116,7 @@ const Layout = styled.div`
 const Main = styled.div``
 
 const Container = styled.div`
-  padding: 5rem 10%;
+  padding: 5rem 5%;
 `
 
 const MainHeader = styled.div`
@@ -150,6 +194,54 @@ const EditorInput = styled.input`
   }
 `
 
+const RemirrorWrapper = styled.div`
+  padding: 1rem 0;
+`
+const MarkdownInfo = styled.div`
+  padding-bottom: 1.5rem;
+`
+
+const MarkdownCodeWrapper = styled.span`
+  margin-right: 1rem;
+`
+
+const MarkdownCode = styled.code`
+  width: 1rem;
+  height: 1rem;
+  padding: 0.3rem;
+  background-color: rgb(241, 242, 243);
+  border: 0.1rem solid rgb(46, 49, 52);
+  border-radius: 0.3rem;
+`
+const MarkdownBold = styled.span`
+  margin-right: 1rem;
+  font-weight: 600;
+`
+const MarkdownItalic = styled.span`
+  margin-right: 1rem;
+  font-style: italic;
+  color: rgb(106, 115, 124);
+`
+const MarkdownQuote = styled.span`
+  margin-right: 1rem;
+  color: rgb(106, 115, 124);
+`
+
+const TagsWrapper = styled.div`
+  display: flex;
+`
+
+const TagsInfo = styled.div`
+  flex: 15;
+`
+
+const TagsHelp = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const EditorButton = styled.button`
   background-color: rgb(9, 149, 255);
   color: rgb(255, 255, 255);
@@ -159,6 +251,16 @@ const EditorButton = styled.button`
   border-radius: 0.5rem;
 `
 
-const MainSide = styled.div`
-  background-color: lightblue;
+const MainSide = styled.div``
+
+const RightBox = styled.div`
+  margin-left: 1rem;
+  width: 32rem;
+`
+
+const Postic = styled.div`
+  box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05),
+    0 2px 8px hsla(0, 0%, 0%, 0.05);
+  border-radius: 3px;
+  border: solid 1px hsl(210, 8%, 85%);
 `
