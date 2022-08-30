@@ -1,9 +1,11 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 import styled from 'styled-components'
 import TagCard from '../TagCard/TagCard'
 
 const QuestionCard = () => {
   const TagsArr = ['javascript', 'jquery', 'pageshow']
+  const navigate = useNavigate()
   // TODO !
   /*
     제목 , 내용 -> 길이가 너무 길 시 slice로 자르는 로직 추가해야함 
@@ -23,7 +25,7 @@ const QuestionCard = () => {
         </div>
       </QuestionState>
       <QuestionSummary>
-        <Title>
+        <Title onClick={() => navigate('/questions/1')}>
           vite build occurred Uncaught TypeError: Failed to fetch dynamically imported module -
         </Title>
         <Content>
