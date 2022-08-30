@@ -29,6 +29,17 @@ const Container = styled.div`
 const SearchInput = styled.input`
   padding: 1rem 0 1rem 5rem;
   width: 100%;
+
+  ::placeholder {
+    color: rgb(207, 204, 204);
+    letter-spacing: 0.05rem;
+  }
+
+  :focus {
+    border: 3px solid rgb(48, 130, 197);
+    outline: 4px solid rgb(223, 238, 249);
+    outline-offset: -2px;
+  }
 `
 const IconBox = styled.div`
   position: absolute;
