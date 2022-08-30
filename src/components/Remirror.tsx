@@ -1,17 +1,10 @@
 import React, {useCallback} from 'react'
-import type {RemirrorJSON} from 'remirror'
-import {OnChangeJSON} from '@remirror/react'
 import {useHelpers} from '@remirror/react'
 import {MarkdownEditor} from '@remirror/react-editors/markdown'
 import 'remirror/styles/all.css'
 import {ThemeProvider} from '@remirror/react'
 import {AllStyledComponent} from '@remirror/styles/emotion'
-
-const STORAGE_KEY = 'remirror-editor-content'
-
-interface MyEditorProps {
-  onChange: (json: RemirrorJSON) => void
-}
+import styled from 'styled-components'
 
 function MarkdownPreview() {
   const {getMarkdown} = useHelpers(true)
@@ -23,29 +16,33 @@ function MarkdownPreview() {
   )
 }
 
-function MyEditor({onChange}: MyEditorProps) {
+function MyEditor() {
   return (
     <ThemeProvider>
       <AllStyledComponent>
-        <div style={{padding: '1rem 0'}}>
+        <MarkdownEditorWrapper>
           <MarkdownEditor placeholder="Enter text...">
-            <OnChangeJSON onChange={onChange} />
-            <MarkdownPreview />
+            <MarkDownPreviewWrapper>
+              <MarkdownPreview />
+            </MarkDownPreviewWrapper>
           </MarkdownEditor>
-        </div>
+        </MarkdownEditorWrapper>
       </AllStyledComponent>
     </ThemeProvider>
   )
 }
 
 const Remirror = () => {
-  const handleEditorChange = useCallback((json: RemirrorJSON) => {
-    // Store the JSON in localstorage
-    // console.log(JSON.stringify(json))
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(json))
-  }, [])
-
-  return <MyEditor onChange={handleEditorChange} />
+  return <MyEditor />
 }
 
 export default Remirror
+
+const MarkdownEditorWrapper = styled.div`
+  font-size: 1.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+`
+const MarkDownPreviewWrapper = styled.div`
+  margin: 2rem 0;
+  line-height: 1.5rem;
+`
