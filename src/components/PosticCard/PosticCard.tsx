@@ -12,7 +12,6 @@ interface ContentType {
 }
 
 const PosticCard = ({title, contents}: Props) => {
-  console.log(contents)
   return (
     <PosticBox>
       <Title>{title}</Title>
