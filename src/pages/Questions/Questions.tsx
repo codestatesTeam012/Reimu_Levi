@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-no-undef */
 import React from 'react'
 import Pen from 'src/assets/svgComponents/Pen'
-// import {useNavigate} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 import AuthButton from 'src/components/AuthButton/AuthButton'
 import Layout from 'src/components/Layout/Layout'
 import PosticCard from 'src/components/PosticCard/PosticCard'
@@ -22,14 +22,19 @@ const contents2 = [
 ]
 
 const Questions = () => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   return (
     <Layout>
       <QuestionsBox>
         <LeftBox>
           <QuestionsHeader>
             <h1>All Questions</h1>
-            <AuthButton mode="SignUp" text="Ask Questions" width={11}></AuthButton>
+            <AuthButton
+              mode="SignUp"
+              text="Ask Questions"
+              width={11}
+              onClick={() => navigate('/write')}
+            ></AuthButton>
           </QuestionsHeader>
           <QuestionSubHeader>
             <span>{toLocalScale(12345623)} questions</span>
