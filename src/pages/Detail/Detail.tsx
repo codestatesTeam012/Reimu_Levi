@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react/no-children-prop */
-import React, {useCallback, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import {OnChangeHTML} from '@remirror/react'
 import {MarkdownEditor} from '@remirror/react-editors/markdown'
 import styled from 'styled-components'
@@ -13,16 +14,33 @@ import MarkDownPreview from 'src/components/MarkDownPreview/MarkDownPreview'
 import PosticCard from 'src/components/PosticCard/PosticCard'
 import TagCard from 'src/components/TagCard/TagCard'
 import {contents1, contents2, markdown, TagsArr} from 'src/utils/etc'
+import {viewPostService} from 'src/apis/ViewPostAPI'
+import {useParams} from 'react-router-dom'
+import {getUser} from 'src/utils/localstorage'
 
 const Detail = () => {
   const [content, setContent] = useState('')
+  const {id} = useParams()
+
+  useEffect(() => {
+    viewPostService.getPostById(Number(id)).then((res) => console.log(res))
+  }, [])
+
   const handleEditorChangeHTML = useCallback((html: string) => {
     setContent(html)
   }, [])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('content', content)
+    const user = getUser()
+    if (!user) {
+      return window.alert('로그인 후 사용해 주세요.')
+    }
+    const form = {
+      username: user.username,
+      content,
+    }
+    console.log('CommentForm', form)
   }
   return (
     <Layout>

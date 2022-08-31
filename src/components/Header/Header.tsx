@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Link, useLocation, useNavigate} from 'react-router-dom'
 import {colors} from 'src/utils/colors'
+import {clearUser, getUser} from 'src/utils/localstorage'
 import styled from 'styled-components'
 import AuthButton from '../AuthButton/AuthButton'
 import LeftSideBar from '../LeftSideBar/LeftSideBar'
@@ -17,6 +18,11 @@ const Header = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [isOpen, setIsOpen] = useState(false)
+  const user = getUser()
+  const HandelLogOut = () => {
+    clearUser()
+    navigate('/')
+  }
   useEffect(() => {
     if (location.pathname !== '/') setIsOpen(false)
   }, [location])
@@ -38,9 +44,16 @@ const Header = () => {
           ))}
         </TopMenu>
         <SearchBar />
+
         <ButtonBox>
-          <AuthButton mode="Login" text="Log in" onClick={() => navigate('/login')} />
-          <AuthButton mode="SignUp" text="Sign up" onClick={() => navigate('/signup')} />
+          {user ? (
+            <AuthButton mode="SignUp" text="LogOut" onClick={HandelLogOut} />
+          ) : (
+            <>
+              <AuthButton mode="Login" text="Log in" onClick={() => navigate('/login')} />
+              <AuthButton mode="SignUp" text="Sign up" onClick={() => navigate('/signup')} />
+            </>
+          )}
         </ButtonBox>
       </SubContainer>
     </Container>
