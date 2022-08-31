@@ -1,31 +1,26 @@
-import axios from 'axios'
-import React, {useEffect} from 'react'
+import React, {useState} from 'react'
+import {Link, useNavigate} from 'react-router-dom'
+import {authService} from 'src/apis/AuthAPI'
 import Logo from 'src/assets/svgComponents/Logo'
 import AuthButton from 'src/components/AuthButton/AuthButton'
 import SocialButton from 'src/components/SocialButton/SocialButton'
 import styled from 'styled-components'
 
 const Login = () => {
-  console.log('sds')
-  useEffect(() => {
-    // axios
-    //   .get('http://3.35.20.134:8080/v1/posts/1')
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err.message))
-  }, [])
-
+  const [error, setErorr] = useState(false)
+  const navigate = useNavigate()
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formdata = new FormData(e.currentTarget)
-    const username = formdata.get('username')
-    const password = formdata.get('password')
-    console.log(username, password)
+    const username = String(formdata.get('username'))
+    const password = String(formdata.get('password'))
     const form = {
       username,
       password,
     }
-    const result = await axios.post('http://3.35.20.134:8080/login', form)
-    console.log(result)
+    const result = await authService.Login(form)
+    if (result.status === 200) navigate('/questions')
+    else setErorr(true)
   }
   return (
     <Container>
@@ -41,15 +36,23 @@ const Login = () => {
             <input type="text" name="username" />
             <LabelBox>
               <label>Password</label>
-              <span>Forgot password?</span>
+              <span>Forgot password ?</span>
             </LabelBox>
             <input type="password" name="password" />
             <ButtonBox>
               <AuthButton mode="SignUp" width={23} text="Log in" />
             </ButtonBox>
+            {error ? <ErrorText>아이디 , 패스워드를 확인해주세요.</ErrorText> : null}
           </LoginForm>
         </LoginBox>
-        <TextBox>asdas</TextBox>
+        <TextBox>
+          <p>
+            Don`t have an account ? <Link to={'/signup'}>Sign up</Link>
+          </p>
+          <p>
+            Are you an employer ? <Link to={'/'}>Sign up on Talent</Link>
+          </p>
+        </TextBox>
       </MainContent>
     </Container>
   )
@@ -85,7 +88,7 @@ const LoginBox = styled.div`
   margin-top: 2rem;
   background-color: white;
   width: 100%;
-  height: 23.6rem;
+  height: 25rem;
   border-radius: 1rem;
 `
 
@@ -109,6 +112,7 @@ const LoginForm = styled.form`
     cursor: pointer;
   }
   input {
+    padding-left: 1rem;
     margin-top: 1rem;
     height: 3.7rem;
     border: solid 1px lightgray;
@@ -126,4 +130,23 @@ const ButtonBox = styled.div`
   margin-top: 2rem;
 `
 
-const TextBox = styled.div``
+const TextBox = styled.div`
+  font-size: 1.2rem;
+  margin-top: 2rem;
+  p {
+    margin-top: 1.5rem;
+  }
+
+  a {
+    margin-top: 2rem;
+    color: hsl(206, 100%, 40%);
+    cursor: pointer;
+    text-decoration: none;
+  }
+`
+const ErrorText = styled.p`
+  padding-top: 1rem;
+  text-align: center;
+  color: red;
+  font-size: 1.2rem;
+`

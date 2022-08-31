@@ -91,7 +91,7 @@ const Main = styled.div`
 `
 
 const Container = styled.div`
-  width: 94%;
+  max-width: 1500px;
   height: 100%;
 `
 

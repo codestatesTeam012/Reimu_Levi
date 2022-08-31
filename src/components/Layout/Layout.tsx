@@ -52,9 +52,7 @@ const LeftNav = styled.div`
 `
 
 const FixBox = styled.div`
-  /* block / fixed? */
-  position: fixed;
-  /* position: block; */
+  position: sticky;
 `
 
 const RightContent = styled.div`

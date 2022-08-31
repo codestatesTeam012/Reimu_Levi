@@ -90,8 +90,6 @@ const LeftSideBarBox = styled.div<{top?: number}>`
   right: auto;
   top: ${({top}) => top ?? 4.5}rem;
   left: 0;
-  /* box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05),
-    0 2px 8px hsla(0, 0%, 0%, 0.05); */
   color: hsl(210, 8%, 25%);
   background-color: hsl(0, 0%, 100%);
   font-size: 1.2rem;
@@ -110,8 +108,6 @@ const LeftNavBar = styled.div<{isOpen: boolean}>`
   display: ${({isOpen}) => (isOpen ? 'block' : 'none')};
   width: 20rem;
   height: 60rem;
-  /* box-shadow: 0 0 0 hsl(210deg 8% 5% / 5%); */
-  /* transition: box-shadow ease-in-out 0.1s, transform ease-in-out 0.1s; */
   transform: translateZ(0);
   padding: 2.4rem 0rem;
 `

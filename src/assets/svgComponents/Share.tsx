@@ -19,4 +19,5 @@ const Container = styled.svg`
   width: 1.4rem;
   height: 1.4rem;
   fill: rgb(49, 132, 209);
+  cursor: pointer;
 `

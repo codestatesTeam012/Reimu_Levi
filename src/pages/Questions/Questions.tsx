@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react/jsx-no-undef */
-import React from 'react'
-import Pen from 'src/assets/svgComponents/Pen'
+import React, {useEffect, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import AuthButton from 'src/components/AuthButton/AuthButton'
 import Layout from 'src/components/Layout/Layout'
@@ -8,21 +8,26 @@ import PosticCard from 'src/components/PosticCard/PosticCard'
 import QuestionCard from 'src/components/QuestionCard.tsx/QuestionCard'
 import {toLocalScale} from 'src/utils/utill'
 import styled from 'styled-components'
-
-const contents1 = [
-  {icon: Pen, content: 'Open source and accidental innovation'},
-  {icon: Pen, content: 'The luckiest guy in AI (Ep. 477)'},
-]
-const contents2 = [
-  {icon: Pen, content: 'Recent site instability, major outages – July/August 2022'},
-  {icon: Pen, content: 'Please welcome Valued Associate #1301 - Emerson'},
-  {icon: Pen, content: 'Staging Ground Workflow: Question Lifecycle'},
-  {icon: Pen, content: 'Collectives Update: WSO2 launches, and Google Go sunsets'},
-  {icon: Pen, content: 'Should we burninate the [option] tag?'},
-]
+import {contents1, contents2} from 'src/utils/etc'
+import {viewPostService} from 'src/apis/ViewPostAPI'
+import {RootState, useAppDispatch, useAppSelector} from 'src/redux/store'
+import {getPostsThunk} from 'src/redux/thunkActions/postsAction'
 
 const Questions = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const {posts, isLoading, error} = useAppSelector((state: RootState) => state.posts)
+  const [pageNum, setPageNum] = useState(1)
+
+  useEffect(() => {
+    dispatch(getPostsThunk(pageNum))
+    viewPostService.getPosts(pageNum).then((res) => console.log(res))
+  }, [pageNum])
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>{error}</div>
+
   return (
     <Layout>
       <QuestionsBox>
@@ -41,21 +46,9 @@ const Questions = () => {
           </QuestionSubHeader>
           <QuestionsContent>
             {/* 15개씩 끊어서 보여줘야 한다 ^&^ */}
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
-            <QuestionCard />
+            {posts.map((post) => (
+              <QuestionCard key={post.postId} />
+            ))}
           </QuestionsContent>
           <Paginations>페이지 네이션 넣을 곳</Paginations>
         </LeftBox>

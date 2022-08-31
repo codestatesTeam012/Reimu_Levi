@@ -26,4 +26,7 @@ const Button = styled.button`
   span {
     padding-left: 0.5rem;
   }
+  :hover {
+    background-color: rgba(241, 238, 238, 0.42);
+  }
 `
