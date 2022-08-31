@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useCallback, useState} from 'react'
 import styled from 'styled-components'
 import Footer from 'src/components/Footer'
 import Header from 'src/components/Header/Header'
@@ -6,8 +6,37 @@ import Remirror from 'src/components/Remirror'
 import PosticCard from 'src/components/PosticCard/PosticCard'
 import Pen from 'src/assets/svgComponents/Pen'
 import Help from 'src/assets/svgComponents/Help'
+import axios from 'axios'
 
 const Write = () => {
+  const [values, setValues] = useState({
+    title: '',
+    body: '',
+    tags: '',
+  })
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    try {
+      const formdata = new FormData(e.currentTarget)
+      const title = formdata.get('title')
+      // const body = formdata.get('body')
+      // const tags = formdata.get('tags')
+      // console.log(title, body, tags)
+      const form = {
+        title: title,
+        // body: body,
+        // tags: tags,
+      }
+      //  headers:{Authorization: `Bearer ${}`}
+      //  headers: {token: `${token}`}
+      const response = await axios.post('http://3.38.214.65:8080/v1/post/create', form)
+      console.log(response.data)
+    } catch {
+      console.log('Error!')
+    }
+  }
+
   const contents1 = [
     {icon: Pen, content: '1. Summarize the problem'},
     {icon: Pen, content: "2. Describe what you've tried"},
@@ -41,7 +70,7 @@ const Write = () => {
           </MainHeader>
           <MainContents>
             <MainEditor>
-              <EditorWrapper>
+              <EditorForm onSubmit={handleSubmit}>
                 <Editor>
                   <EditorContentWrapper>
                     <EditorTitle>Title</EditorTitle>
@@ -50,6 +79,7 @@ const Write = () => {
                     </EditorDesc>
                     <EditorInput
                       type="text"
+                      name="title"
                       placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
                     />
                   </EditorContentWrapper>
@@ -82,11 +112,15 @@ const Write = () => {
                         <Help />
                       </TagsHelp>
                     </TagsWrapper>
-                    <EditorInput type="text" placeholder="e.g. (ruby-on-rails .net sql-server" />
+                    <EditorInput
+                      type="text"
+                      name="tags"
+                      placeholder="e.g. (ruby-on-rails .net sql-server"
+                    />
                   </EditorContentWrapper>
                 </Editor>
                 <EditorButton>Post your question</EditorButton>
-              </EditorWrapper>
+              </EditorForm>
             </MainEditor>
             <MainSide>
               <RightBox>
@@ -145,7 +179,7 @@ const MainEditor = styled.div`
   width: 80%;
 `
 
-const EditorWrapper = styled.div``
+const EditorForm = styled.form``
 
 const Editor = styled.div`
   box-shadow: 0 1px 3px hsla(0, 0%, 0%, 0.06), 0 2px 6px hsla(0, 0%, 0%, 0.06),
