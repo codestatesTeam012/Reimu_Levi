@@ -1,16 +1,24 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {getPostsThunk} from '../thunkActions/postsAction'
 
-export interface Posts {
-  postId: number
+export interface Post {
+  postsId: number
   title: string
   content: string
+}
+
+export interface PageInfo {
+  page: number
+  size: number
+  totalElements: number
+  totalPages: number
 }
 
 export interface IPosts {
   isLoading: boolean
   error: string
-  posts: Posts[]
+  posts: Post[]
+  pageInfo: PageInfo | null
 }
 
 // 초기 상태 타입을 지정해줘야 합니다 !
@@ -18,6 +26,7 @@ const initialState: IPosts = {
   isLoading: false,
   error: 'string',
   posts: [],
+  pageInfo: null,
 }
 
 // Slice가 store 에 등록
@@ -32,7 +41,8 @@ export const postsSlice = createSlice({
       })
       .addCase(getPostsThunk.fulfilled, (state, {payload}) => {
         state.isLoading = false
-        state.posts = payload
+        state.posts = payload.data
+        state.pageInfo = payload.pageInfo
       })
       .addCase(getPostsThunk.rejected, (state, {payload}) => {
         state.isLoading = true
