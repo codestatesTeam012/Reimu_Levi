@@ -57,4 +57,5 @@ const FixBox = styled.div`
 
 const RightContent = styled.div`
   width: 84%;
+  min-height: 75vh;
 `
