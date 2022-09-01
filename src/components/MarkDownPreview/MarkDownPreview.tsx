@@ -1,56 +1,21 @@
 import React from 'react'
-import ReactMarkdown from 'react-markdown'
 import styled from 'styled-components'
 import parse from 'html-react-parser'
+
 interface Props {
-  markdown: string
+  content: string
 }
 
-const MarkDownPreview = ({markdown}: Props) => {
-  const result = parse(`
-  <h3>asdasdasdas</h3>
-  </p>asdasdasd</p>
-  <span>asdasdas</span>
-  <pre>
-    <code>
-myform.addEventListener('submit', function (e) {
-  e.preventDefault();
-
-  const formData = new FormData(this);
-
-  const options = {
-      mode: 'no-cors',
-      method: 'POST',
-      headers: {
-          'content-type': 'application/json'},
-      body: JSON.stringify(Object.fromEntries(formData))
-
-  }
-
-
-  fetch('https://api.tripleseat.com/v1/leads/create.js?lead_form_id=xxxxx&public_key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', options)
-      
-  .then(function (response) {
-      return response.text();
-  }).then(function (text) {
-      console.log(text);
-  }).catch(function (error) {
-  })
-});
-    </code>
-  </pre>
-  `)
-  return (
-    <MarkDownBox>
-      {/* <ReactMarkdown>{markdown}</ReactMarkdown> */}
-      {result}
-    </MarkDownBox>
-  )
+const MarkDownPreview = ({content}: Props) => {
+  const result = parse(content)
+  return <MarkDownBox>{result}</MarkDownBox>
 }
 
 export default MarkDownPreview
 
 const MarkDownBox = styled.div`
+  font-size: 1.5rem;
+
   body {
     margin: 0 auto;
     font-family: Georgia, Palatino, serif;
