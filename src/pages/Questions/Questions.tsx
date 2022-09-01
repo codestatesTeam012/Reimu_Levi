@@ -9,24 +9,23 @@ import QuestionCard from 'src/components/QuestionCard.tsx/QuestionCard'
 import {toLocalScale} from 'src/utils/utill'
 import styled from 'styled-components'
 import {contents1, contents2} from 'src/utils/etc'
-import {viewPostService} from 'src/apis/ViewPostAPI'
 import {RootState, useAppDispatch, useAppSelector} from 'src/redux/store'
 import {getPostsThunk} from 'src/redux/thunkActions/postsAction'
+import Pagenation from 'src/components/Paginations/Pagenation'
 
 const Questions = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const {posts, isLoading, error} = useAppSelector((state: RootState) => state.posts)
-  const [pageNum, setPageNum] = useState(1)
+  const {posts, isLoading, pageInfo} = useAppSelector((state: RootState) => state.posts)
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    dispatch(getPostsThunk(pageNum))
-    viewPostService.getPosts(pageNum).then((res) => console.log(res))
-  }, [pageNum])
+    dispatch(getPostsThunk(currentPage))
+  }, [currentPage])
 
+  console.log(pageInfo)
   if (isLoading) return <div>Loading...</div>
-  if (error) return <div>{error}</div>
 
   return (
     <Layout>
@@ -45,12 +44,23 @@ const Questions = () => {
             <span>{toLocalScale(12345623)} questions</span>
           </QuestionSubHeader>
           <QuestionsContent>
-            {/* 15개씩 끊어서 보여줘야 한다 ^&^ */}
-            {posts.map((post) => (
-              <QuestionCard key={post.postId} />
-            ))}
+            {posts.length === 0 ? (
+              <NoContent>컨텐츠가 없어요.</NoContent>
+            ) : (
+              posts.map((post) => <QuestionCard key={post.postsId} post={post} />)
+            )}
           </QuestionsContent>
-          <Paginations>페이지 네이션 넣을 곳</Paginations>
+          <PageNationBox>
+            {pageInfo?.totalPages ? (
+              <Pagenation
+                currentPage={currentPage}
+                setPage={setCurrentPage}
+                // totalPage={pageInfo?.totalPages}
+                totalPage={50}
+                limit={5}
+              />
+            ) : null}
+          </PageNationBox>
         </LeftBox>
         <RightBox>
           <Postic>
@@ -85,7 +95,6 @@ const LeftBox = styled.div`
 const RightBox = styled.div`
   margin-left: 1rem;
   width: 32rem;
-  /* background-color: skyblue; */
 `
 const QuestionsHeader = styled.div`
   height: 6rem;
@@ -93,7 +102,6 @@ const QuestionsHeader = styled.div`
   justify-content: space-between;
   padding-top: 3rem;
   padding-left: 2rem;
-  /* align-items: center; */
   h1 {
     font-weight: 500;
     font-size: 2.5rem;
@@ -115,7 +123,11 @@ const QuestionsContent = styled.div`
   border-top: solid 1px lightgray;
 `
 
-const Paginations = styled.div``
+const PageNationBox = styled.div`
+  margin-top: 2rem;
+  display: flex;
+  margin-bottom: 2rem;
+`
 
 const Postic = styled.div`
   margin-top: 2rem;
@@ -123,4 +135,10 @@ const Postic = styled.div`
     0 2px 8px hsla(0, 0%, 0%, 0.05);
   border-radius: 3px;
   border: solid 1px hsl(210, 8%, 85%);
+`
+
+const NoContent = styled.h1`
+  margin-top: 2rem;
+  text-align: center;
+  font-size: 2rem;
 `
