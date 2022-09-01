@@ -13,17 +13,21 @@ import Layout from 'src/components/Layout/Layout'
 import MarkDownPreview from 'src/components/MarkDownPreview/MarkDownPreview'
 import PosticCard from 'src/components/PosticCard/PosticCard'
 import TagCard from 'src/components/TagCard/TagCard'
-import {contents1, contents2, markdown, TagsArr} from 'src/utils/etc'
-import {viewPostService} from 'src/apis/ViewPostAPI'
+import {contents1, contents2, TagsArr} from 'src/utils/etc'
 import {useParams} from 'react-router-dom'
 import {getUser} from 'src/utils/localstorage'
+import {RootState, useAppDispatch, useAppSelector} from 'src/redux/store'
+import {getPostThunk} from 'src/redux/thunkActions/postAction'
 
 const Detail = () => {
-  const [content, setContent] = useState('')
   const {id} = useParams()
+  const dispatch = useAppDispatch()
+  const {post, isLoading} = useAppSelector((state: RootState) => state.post)
+  const user = getUser()
+  const [content, setContent] = useState('')
 
   useEffect(() => {
-    viewPostService.getPostById(Number(id)).then((res) => console.log(res))
+    dispatch(getPostThunk(Number(id)))
   }, [])
 
   const handleEditorChangeHTML = useCallback((html: string) => {
@@ -42,12 +46,15 @@ const Detail = () => {
     }
     console.log('CommentForm', form)
   }
+
+  if (isLoading || !post) return <div>로딩중 입니다</div>
+
   return (
     <Layout>
       <Container>
         <Header>
           <TitleBox>
-            <h1>How to access gitlab-ce web pages?</h1>
+            <h1>{post.title}</h1>
             <AuthButton mode="SignUp" text="Ask Questions" width={11} />
           </TitleBox>
           <SubBox>
@@ -76,7 +83,7 @@ const Detail = () => {
                 <BackClock />
               </UtilIcons>
               <MainContent>
-                <MarkDownPreview markdown={markdown} />
+                <MarkDownPreview content={post.content} />
                 <Tags>
                   {TagsArr.map((tag) => (
                     <TagCard tag={tag} key={tag} />
@@ -86,9 +93,12 @@ const Detail = () => {
                   <ShareInfo>
                     <span>Share</span>
                     <span>Follow</span>
-                    {/* 로그인 시 보여야 하는 정보 */}
-                    <span>Edit</span>
-                    <span>Flag</span>
+                    {user ? (
+                      <>
+                        <span>Edit</span>
+                        <span>Flag</span>
+                      </>
+                    ) : null}
                   </ShareInfo>
                   <UserInfo>HwanMini</UserInfo>
                 </BottomContent>

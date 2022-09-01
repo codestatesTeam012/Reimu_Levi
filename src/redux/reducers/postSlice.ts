@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {getPostsThunk} from '../thunkActions/postsAction'
+import {getPostThunk} from '../thunkActions/postAction'
 
 export interface Post {
   postsId: number
@@ -7,44 +7,34 @@ export interface Post {
   content: string
 }
 
-export interface PageInfo {
-  page: number
-  size: number
-  totalElements: number
-  totalPages: number
-}
-
-export interface IPosts {
+export interface IPost {
   isLoading: boolean
   error: string
-  posts: Post[]
-  pageInfo: PageInfo | null
+  post: Post | null
 }
 
 // 초기 상태 타입을 지정해줘야 합니다 !
-const initialState: IPosts = {
+const initialState: IPost = {
   isLoading: false,
   error: 'string',
-  posts: [],
-  pageInfo: null,
+  post: null,
 }
 
 // Slice가 store 에 등록
-export const postsSlice = createSlice({
-  name: 'posts',
+export const postSlice = createSlice({
+  name: 'post',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getPostsThunk.pending, (state) => {
+      .addCase(getPostThunk.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getPostsThunk.fulfilled, (state, {payload}) => {
+      .addCase(getPostThunk.fulfilled, (state, {payload}) => {
         state.isLoading = false
-        state.posts = payload.data
-        state.pageInfo = payload.pageInfo
+        state.post = payload
       })
-      .addCase(getPostsThunk.rejected, (state, {payload}) => {
+      .addCase(getPostThunk.rejected, (state, {payload}) => {
         state.isLoading = true
         if (payload) {
           state.error = '에러가 발생 했어요'
@@ -56,4 +46,4 @@ export const postsSlice = createSlice({
 // 만들어진 액션을 내보내 주세요.
 // export const {} = testSlice.actions
 
-export default postsSlice.reducer
+export default postSlice.reducer

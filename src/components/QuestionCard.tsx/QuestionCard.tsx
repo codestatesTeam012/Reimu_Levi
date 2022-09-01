@@ -1,16 +1,17 @@
 import React from 'react'
 import {useNavigate} from 'react-router-dom'
+import {Post} from 'src/redux/reducers/postsSlice'
 import styled from 'styled-components'
 import TagCard from '../TagCard/TagCard'
 
-const QuestionCard = () => {
+interface Props {
+  post: Post
+}
+
+const QuestionCard = ({post}: Props) => {
   const TagsArr = ['javascript', 'jquery', 'pageshow']
   const navigate = useNavigate()
-  // TODO !
-  /*
-    제목 , 내용 -> 길이가 너무 길 시 slice로 자르는 로직 추가해야함 
-    태그가 너무 많을 시 몇개만 보여줄 지 생각해야함 
-  */
+
   return (
     <QuestionBox>
       <QuestionState>
@@ -25,14 +26,10 @@ const QuestionCard = () => {
         </div>
       </QuestionState>
       <QuestionSummary>
-        <Title onClick={() => navigate('/questions/1')}>
-          vite build occurred Uncaught TypeError: Failed to fetch dynamically imported module -
+        <Title onClick={() => navigate(`/questions/${post.postsId}`)}>
+          {post.title.slice(0, 20)}
         </Title>
-        <Content>
-          when I use npm run build , I encountered above problem. I use vite, react and typescript.
-          Here are my configuration: I already tried all methods in all discussion, but still can,t
-          deploy in my ...
-        </Content>
+        <Content>{post.content.slice(0, 30)}</Content>
         <MetaBox>
           <Tags>
             {TagsArr.map((tag) => (

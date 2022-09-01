@@ -1,5 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux'
+import postSlice from '../reducers/postSlice'
 import postsSlice from '../reducers/postsSlice'
 import testSlice from '../reducers/testSlice'
 
@@ -8,6 +9,7 @@ export const store = configureStore({
     // 사용할 Slice를 reducer에 등록 해주세요 !
     test: testSlice,
     posts: postsSlice,
+    post: postSlice,
   },
 })
 
