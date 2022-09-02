@@ -11,15 +11,16 @@ import styled from 'styled-components'
 import {contents1, contents2} from 'src/utils/etc'
 import {RootState, useAppDispatch, useAppSelector} from 'src/redux/store'
 import {getPostsThunk} from 'src/redux/thunkActions/postsAction'
-import Pagenation from 'src/components/Paginations/Pagenation'
+import {getUser} from 'src/utils/localstorage'
+import Pagination from 'src/components/Paginations/Pagenation'
 
 const Questions = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-
+  const user = getUser()
   const {posts, isLoading, pageInfo} = useAppSelector((state: RootState) => state.posts)
   const [currentPage, setCurrentPage] = useState(1)
-
+  console.log(posts)
   useEffect(() => {
     dispatch(getPostsThunk(currentPage))
   }, [currentPage])
@@ -37,7 +38,10 @@ const Questions = () => {
               mode="SignUp"
               text="Ask Questions"
               width={11}
-              onClick={() => navigate('/write')}
+              onClick={() => {
+                if (!user) navigate('/login')
+                else navigate('/write')
+              }}
             ></AuthButton>
           </QuestionsHeader>
           <QuestionSubHeader>
@@ -52,12 +56,12 @@ const Questions = () => {
           </QuestionsContent>
           <PageNationBox>
             {pageInfo?.totalPages ? (
-              <Pagenation
+              <Pagination
+                totalPage={pageInfo.totalPages}
                 currentPage={currentPage}
-                setPage={setCurrentPage}
-                // totalPage={pageInfo?.totalPages}
-                totalPage={50}
-                limit={5}
+                setCurrentPage={setCurrentPage}
+                split={5}
+                jump={5}
               />
             ) : null}
           </PageNationBox>
