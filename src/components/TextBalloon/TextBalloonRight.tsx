@@ -92,15 +92,16 @@ const ContentOneButton = styled.button`
   background-color: rgb(9, 149, 255);
   border-radius: 0.7rem;
   color: rgb(255, 255, 255);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   text-decoration: none;
   border: none;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.05rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.4rem 0.7rem;
+  padding: 1.3rem 1.2rem;
   min-width: 150px;
+  cursor: pointer;
 
   :nth-child(1) {
     flex: 3;
