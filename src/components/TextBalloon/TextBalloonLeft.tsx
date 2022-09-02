@@ -29,7 +29,6 @@ export default TextBalloonLeft
 const ContentOneCard = styled.div`
   max-width: 44rem;
   height: 25rem;
-  margin: 0rem 1.5rem;
   background-color: rgb(254, 227, 205);
   border-radius: 0.6rem;
   padding: 3rem 4.5rem;
@@ -69,12 +68,13 @@ const ContentOneCardButton = styled.button`
   background-color: rgb(242, 116, 14);
   border-radius: 0.7rem;
   color: rgb(255, 255, 255);
-  padding: 1.4rem 3.5rem;
-  font-size: 1.4rem;
+  padding: 1.3rem 3.7rem;
+  font-size: 1.3rem;
   text-decoration: none;
   margin: 0.5rem 0 1rem 0;
   border: none;
   letter-spacing: 0.1rem;
+  cursor: pointer;
 
   :hover {
     background-color: rgb(219, 104, 10);
