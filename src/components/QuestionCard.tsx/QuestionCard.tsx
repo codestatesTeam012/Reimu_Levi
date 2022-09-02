@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import {Post} from 'src/redux/reducers/postsSlice'
 import styled from 'styled-components'
 import TagCard from '../TagCard/TagCard'
+import parse from 'html-react-parser'
 
 interface Props {
   post: Post
@@ -11,7 +12,7 @@ interface Props {
 const QuestionCard = ({post}: Props) => {
   const TagsArr = ['javascript', 'jquery', 'pageshow']
   const navigate = useNavigate()
-
+  const result = parse(post.content)
   return (
     <QuestionBox>
       <QuestionState>
@@ -29,7 +30,7 @@ const QuestionCard = ({post}: Props) => {
         <Title onClick={() => navigate(`/questions/${post.postsId}`)}>
           {post.title.slice(0, 20)}
         </Title>
-        <Content>{post.content.slice(0, 30)}</Content>
+        <Content>{result}</Content>
         <MetaBox>
           <Tags>
             {TagsArr.map((tag) => (
@@ -99,7 +100,7 @@ const Title = styled.h1`
   color: hsl(206, 100%, 40%);
   cursor: pointer;
 `
-const Content = styled.p`
+const Content = styled.div`
   color: hsl(210, 8%, 25%);
   padding-top: 0.5rem;
   font-size: 1.35rem;
