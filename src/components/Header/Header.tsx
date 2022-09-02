@@ -21,7 +21,7 @@ const Header = () => {
   const user = getUser()
   const HandelLogOut = () => {
     clearUser()
-    navigate('/')
+    window.location.replace('/')
   }
   useEffect(() => {
     if (location.pathname !== '/') setIsOpen(false)

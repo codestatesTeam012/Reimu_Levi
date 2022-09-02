@@ -15,3 +15,9 @@ export interface decodedType {
   sub: string
   username: string
 }
+
+export interface IWrite {
+  title: string
+  content: string
+  username: string
+}

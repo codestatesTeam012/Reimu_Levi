@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import Footer from 'src/components/Footer'
 import Remirror from 'src/components/Remirror'
@@ -6,50 +6,48 @@ import PosticCard from 'src/components/PosticCard/PosticCard'
 import Pen from 'src/assets/svgComponents/Pen'
 import Help from 'src/assets/svgComponents/Help'
 import {getUser} from 'src/utils/localstorage'
+import {useNavigate, useParams} from 'react-router-dom'
+import {RootState, useAppDispatch, useAppSelector} from 'src/redux/store'
+import {getPostThunk} from 'src/redux/thunkActions/postAction'
 import {authPostService} from 'src/apis/AuthPostAPI'
-import {useNavigate} from 'react-router-dom'
 
-const Write = () => {
+const Edit = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const {id} = useParams()
   const user = getUser()
+
   if (user === null) {
     window.alert('로그인 후 사용해 주세요.')
   }
+
+  const {post, isLoading} = useAppSelector((state: RootState) => state.post)
+
+  const [title, setTitle] = useState(post?.title)
   const [content, setContent] = useState('')
+
+  useEffect(() => {
+    dispatch(getPostThunk(Number(id)))
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const formdata = new FormData(e.currentTarget)
-    const title = String(formdata.get('title'))
+    if (!post || !title) return window.alert('글 정보가 없습니다.')
 
     const form = {
+      username: user.username,
       title,
       content,
-      username: user.username,
     }
-    const result = await authPostService.writePost(form)
-    if (result.status === 201) navigate('/questions')
+    const result = await authPostService.editPost(post?.postsId, form)
+    if (result.status === 200) {
+      navigate('/questions')
+    }
   }
 
-  const contents1 = [
-    {icon: Pen, content: '1. Summarize the problem'},
-    {icon: Pen, content: "2. Describe what you've tried"},
-    {icon: Pen, content: '3. Show some code'},
-  ]
-  const contents2 = [
-    {icon: Pen, content: 'Super user : Troubleshooting hardware and software issues'},
-    {
-      icon: Pen,
-      content: 'Software engineering : For software development methods and process questions',
-    },
-    {icon: Pen, content: 'Hardware recommendations'},
-    {icon: Pen, content: 'Software recommendations'},
-    {icon: Pen, content: 'Ask questions about the site on meta'},
-  ]
-  const contents3 = [
-    {icon: Pen, content: 'Find more information about how to ask a good question here'},
-    {icon: Pen, content: 'Visit the help center'},
-  ]
+  if (isLoading) return <div>Loading...</div>
 
   return (
     <Layout>
@@ -75,6 +73,8 @@ const Write = () => {
                       type="text"
                       name="title"
                       placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
                     />
                   </EditorContentWrapper>
                   <EditorContentWrapper>
@@ -133,7 +133,7 @@ const Write = () => {
   )
 }
 
-export default Write
+export default Edit
 
 const Layout = styled.div`
   display: flex;
@@ -292,3 +292,23 @@ const Postic = styled.div`
   border-radius: 3px;
   border: solid 1px hsl(210, 8%, 85%);
 `
+
+const contents1 = [
+  {icon: Pen, content: '1. Summarize the problem'},
+  {icon: Pen, content: "2. Describe what you've tried"},
+  {icon: Pen, content: '3. Show some code'},
+]
+const contents2 = [
+  {icon: Pen, content: 'Super user : Troubleshooting hardware and software issues'},
+  {
+    icon: Pen,
+    content: 'Software engineering : For software development methods and process questions',
+  },
+  {icon: Pen, content: 'Hardware recommendations'},
+  {icon: Pen, content: 'Software recommendations'},
+  {icon: Pen, content: 'Ask questions about the site on meta'},
+]
+const contents3 = [
+  {icon: Pen, content: 'Find more information about how to ask a good question here'},
+  {icon: Pen, content: 'Visit the help center'},
+]

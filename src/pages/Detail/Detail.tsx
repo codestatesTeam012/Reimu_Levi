@@ -14,10 +14,11 @@ import MarkDownPreview from 'src/components/MarkDownPreview/MarkDownPreview'
 import PosticCard from 'src/components/PosticCard/PosticCard'
 import TagCard from 'src/components/TagCard/TagCard'
 import {contents1, contents2, TagsArr} from 'src/utils/etc'
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import {getUser} from 'src/utils/localstorage'
 import {RootState, useAppDispatch, useAppSelector} from 'src/redux/store'
 import {getPostThunk} from 'src/redux/thunkActions/postAction'
+import {authPostService} from 'src/apis/AuthPostAPI'
 
 const Detail = () => {
   const {id} = useParams()
@@ -25,6 +26,7 @@ const Detail = () => {
   const {post, isLoading} = useAppSelector((state: RootState) => state.post)
   const user = getUser()
   const [content, setContent] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     dispatch(getPostThunk(Number(id)))
@@ -33,6 +35,16 @@ const Detail = () => {
   const handleEditorChangeHTML = useCallback((html: string) => {
     setContent(html)
   }, [])
+
+  const handleDeleteQuestion = async () => {
+    if (!post) {
+      return window.alert('조회하려는 글이 없습니다.')
+    }
+    const result = await authPostService.deletePost(post?.postsId)
+    if (result.status === 204) {
+      navigate('/questions')
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -92,11 +104,11 @@ const Detail = () => {
                 <BottomContent>
                   <ShareInfo>
                     <span>Share</span>
-                    <span>Follow</span>
+                    <span>Flag</span>
                     {user ? (
                       <>
-                        <span>Edit</span>
-                        <span>Flag</span>
+                        <span onClick={handleDeleteQuestion}>Delete</span>
+                        <span onClick={() => navigate(`/edit/${id}`)}>Edit</span>
                       </>
                     ) : null}
                   </ShareInfo>

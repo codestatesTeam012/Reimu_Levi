@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react'
-import {useHelpers} from '@remirror/react'
+import {OnChangeHTML, useHelpers, useRemirror} from '@remirror/react'
 import {MarkdownEditor} from '@remirror/react-editors/markdown'
 import 'remirror/styles/all.css'
 import {ThemeProvider} from '@remirror/react'
@@ -16,12 +16,21 @@ function MarkdownPreview() {
   )
 }
 
-function MyEditor() {
+interface Props {
+  setContent: React.Dispatch<React.SetStateAction<string>>
+}
+
+function MyEditor({setContent}: Props) {
+  const handleEditorChangeHTML = useCallback((html: string) => {
+    setContent(html)
+  }, [])
+
   return (
     <ThemeProvider>
       <AllStyledComponent>
         <MarkdownEditorWrapper>
           <MarkdownEditor placeholder="Enter text...">
+            <OnChangeHTML onChange={handleEditorChangeHTML} />
             <MarkDownPreviewWrapper>
               <MarkdownPreview />
             </MarkDownPreviewWrapper>
@@ -32,8 +41,8 @@ function MyEditor() {
   )
 }
 
-const Remirror = () => {
-  return <MyEditor />
+const Remirror = ({setContent}: Props) => {
+  return <MyEditor setContent={setContent} />
 }
 
 export default Remirror
