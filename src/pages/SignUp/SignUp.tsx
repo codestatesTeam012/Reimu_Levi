@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Help from 'src/assets/svgComponents/Help'
 import Share from 'src/assets/svgComponents/Share'
@@ -7,35 +7,28 @@ import UpDownUnit from 'src/assets/svgComponents/UpDownUnit'
 import Tag from 'src/assets/svgComponents/Tag'
 import Trophy from 'src/assets/svgComponents/Trophy'
 import SocialButton from 'src/components/SocialButton/SocialButton'
-import axios from 'axios'
+import {authService} from 'src/apis/AuthAPI'
+import {useNavigate} from 'react-router-dom'
 
 const SignUp = () => {
-  const [values, setValues] = useState({
-    username: '',
-    email: '',
-    password: '',
-  })
-
+  const navigate = useNavigate()
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try {
-      const formdata = new FormData(e.currentTarget)
-      const username = formdata.get('username')
-      const email = formdata.get('email')
-      const password = formdata.get('password')
-      // console.log(username, email, password)
-      const form = {
-        username: username,
-        email: email,
-        password: password,
-      }
-      /*ec2-54-180-91-32.ap-northeast-2.compute.amazonaws.com
-admin.cy6doy34twwm.ap-northeast-2.rds.amazonaws.com
-adminrdssql! */
-      const response = await axios.post('http://3.38.214.65:8080/v1/member/create', form)
-      console.log(response)
-    } catch {
-      console.log('Error!')
+
+    const formdata = new FormData(e.currentTarget)
+    const username = String(formdata.get('username'))
+    const email = String(formdata.get('email'))
+    const password = String(formdata.get('password'))
+
+    const form = {
+      username: username,
+      email: email,
+      password: password,
+    }
+
+    const result = await authService.SignUp(form)
+    if (result.status === 200) {
+      navigate('/login')
     }
   }
 

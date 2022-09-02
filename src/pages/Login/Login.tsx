@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {authService} from 'src/apis/AuthAPI'
 import Logo from 'src/assets/svgComponents/Logo'
 import AuthButton from 'src/components/AuthButton/AuthButton'
@@ -8,7 +8,6 @@ import styled from 'styled-components'
 
 const Login = () => {
   const [error, setErorr] = useState(false)
-  const navigate = useNavigate()
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formdata = new FormData(e.currentTarget)
@@ -19,7 +18,7 @@ const Login = () => {
       password,
     }
     const result = await authService.Login(form)
-    if (result.status === 200) navigate('/questions')
+    if (result.status === 200) window.location.replace('/questions')
     else setErorr(true)
   }
   return (
@@ -32,7 +31,7 @@ const Login = () => {
         <SocialButton />
         <LoginBox>
           <LoginForm onSubmit={handleSubmit}>
-            <label>Eamil</label>
+            <label>UserName</label>
             <input type="text" name="username" />
             <LabelBox>
               <label>Password</label>
