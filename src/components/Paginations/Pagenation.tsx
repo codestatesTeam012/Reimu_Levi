@@ -1,51 +1,118 @@
 import React from 'react'
-import {colors} from 'src/utils/colors'
 import styled from 'styled-components'
 
 interface Props {
   totalPage: number
   currentPage: number
-  setPage: React.Dispatch<React.SetStateAction<number>>
-  limit: number
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+  split: number
+  jump: number
 }
+function Pagination({totalPage, currentPage, setCurrentPage, split, jump}: Props) {
+  const ButtonsNumArr = []
+  for (let i = 1; i < totalPage + 1; i++) {
+    ButtonsNumArr.push(i)
+  }
 
-const Pagenation = ({totalPage, currentPage, setPage, limit}: Props) => {
-  const numPages = Math.ceil(totalPage / limit)
+  // if (currentPage + split >= totalPage) {
+  //   return (
+  //     <div>
+  //       <Button
+  //         onClick={() => setCurrentPage(1)}
+  //         disabled={currentPage <= 1 ? true : false}
+  //       >
+  //         {"<<"}
+  //       </Button>
+  //       <Button
+  //         onClick={() => {
+  //           if (currentPage - 5 <= 1) {
+  //             setCurrentPage(1);
+  //           } else setCurrentPage(currentPage - 5);
+  //         }}
+  //         disabled={currentPage <= 1 ? true : false}
+  //       >
+  //         {"<"}
+  //       </Button>
+  //       {ButtonsNumArr.slice(totalPage - split, totalPage).map((num) => (
+  //         <Button
+  //           key={num}
+  //           onClick={() => {
+  //             setCurrentPage(num);
+  //           }}
+  //         >
+  //           {num}
+  //         </Button>
+  //       ))}
+  //       <Button
+  //         onClick={() => {
+  //           if (currentPage + 5 >= totalPage) {
+  //             setCurrentPage(totalPage);
+  //           } else {
+  //             setCurrentPage(currentPage + 5);
+  //           }
+  //         }}
+  //         disabled={currentPage >= totalPage ? true : false}
+  //       >
+  //         {">"}
+  //       </Button>
+  //       <Button
+  //         onClick={() => setCurrentPage(totalPage)}
+  //         disabled={currentPage >= totalPage ? true : false}
+  //       >
+  //         {">>"}
+  //       </Button>
+  //     </div>
+  //   );
+  // }
+
   return (
-    <>
-      <Nav>
-        <Button onClick={() => setPage(currentPage - 1)} disabled={currentPage === 1}>
-          {/* &lt; */}
-          Prev
+    <div>
+      <Button onClick={() => setCurrentPage(1)} disabled={currentPage <= 1 ? true : false}>
+        {'<<'}
+      </Button>
+      <Button
+        onClick={() => {
+          if (currentPage - jump <= 1) {
+            setCurrentPage(1)
+          } else setCurrentPage(currentPage - jump)
+        }}
+        disabled={currentPage <= 1 ? true : false}
+      >
+        {'<'}
+      </Button>
+      {ButtonsNumArr.slice(currentPage - 1, currentPage + split - 1).map((num) => (
+        <Button
+          key={num}
+          onClick={() => {
+            setCurrentPage(num)
+          }}
+        >
+          {num}
         </Button>
-        {Array(limit)
-          .fill(0)
-          .map((_, i) => (
-            <Button
-              key={i + 1}
-              onClick={() => setPage(i + 1)}
-              aria-current={currentPage === i + 1 ? 'currentPage' : null}
-            >
-              {i + 1}
-            </Button>
-          ))}
-        <Button onClick={() => setPage(currentPage + 1)} disabled={currentPage === numPages}>
-          {/* &gt;  */}
-          Next
-        </Button>
-      </Nav>
-    </>
+      ))}
+      <Button
+        onClick={() => {
+          if (currentPage + jump >= totalPage) {
+            setCurrentPage(totalPage)
+          } else {
+            setCurrentPage(currentPage + jump)
+          }
+        }}
+        disabled={currentPage >= totalPage ? true : false}
+      >
+        {'>'}
+      </Button>
+      <Button
+        onClick={() => setCurrentPage(totalPage)}
+        disabled={currentPage >= totalPage ? true : false}
+      >
+        {'>>'}
+      </Button>
+    </div>
   )
 }
 
-export default Pagenation
-const Nav = styled.nav`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  margin: 16px;
-`
+export default Pagination
 
 const Button = styled.button<{[key: string]: any}>`
   border: none;
@@ -58,7 +125,7 @@ const Button = styled.button<{[key: string]: any}>`
   border: solid 1px lightgray;
 
   &:hover {
-    background: ${colors.mainColorOrange};
+    background: skyblue;
     cursor: pointer;
     transform: translateY(-2px);
   }
@@ -70,7 +137,7 @@ const Button = styled.button<{[key: string]: any}>`
   }
 
   &[aria-current] {
-    background: ${colors.mainColorOrange};
+    background: skyblue;
     color: white;
     font-weight: bold;
     cursor: revert;
