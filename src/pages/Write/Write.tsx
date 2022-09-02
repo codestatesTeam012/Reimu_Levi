@@ -1,40 +1,34 @@
-import React, {useCallback, useState} from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import Footer from 'src/components/Footer'
-import Header from 'src/components/Header/Header'
 import Remirror from 'src/components/Remirror'
 import PosticCard from 'src/components/PosticCard/PosticCard'
 import Pen from 'src/assets/svgComponents/Pen'
 import Help from 'src/assets/svgComponents/Help'
-import axios from 'axios'
+import {getUser} from 'src/utils/localstorage'
+import {authPostService} from 'src/apis/AuthPostAPI'
+import {useNavigate} from 'react-router-dom'
 
 const Write = () => {
-  const [values, setValues] = useState({
-    title: '',
-    body: '',
-    tags: '',
-  })
-
+  const navigate = useNavigate()
+  const user = getUser()
+  if (user === null) {
+    window.alert('로그인 후 사용해 주세요.')
+  }
+  const [content, setContent] = useState('')
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    try {
-      const formdata = new FormData(e.currentTarget)
-      const title = formdata.get('title')
-      // const body = formdata.get('body')
-      // const tags = formdata.get('tags')
-      // console.log(title, body, tags)
-      const form = {
-        title: title,
-        // body: body,
-        // tags: tags,
-      }
-      //  headers:{Authorization: `Bearer ${}`}
-      //  headers: {token: `${token}`}
-      const response = await axios.post('http://3.38.214.65:8080/v1/post/create', form)
-      console.log(response.data)
-    } catch {
-      console.log('Error!')
+
+    const formdata = new FormData(e.currentTarget)
+    const title = String(formdata.get('title'))
+
+    const form = {
+      title,
+      content,
+      username: user.username,
     }
+    const result = await authPostService.writePost(form)
+    if (result.status === 201) navigate('/questions')
   }
 
   const contents1 = [
@@ -89,7 +83,7 @@ const Write = () => {
                       Include all the information someone would need to answer your question
                     </EditorDesc>
                     <RemirrorWrapper>
-                      <Remirror />
+                      <Remirror setContent={setContent} />
                     </RemirrorWrapper>
                     <MarkdownInfo>
                       <MarkdownCodeWrapper>
