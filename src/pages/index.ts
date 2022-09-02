@@ -7,5 +7,6 @@ import SignUp from './SignUp/SignUp'
 import Login from './Login/Login'
 import Detail from './Detail/Detail'
 import Write from './Write/Write'
+import Edit from './Edit/Edit'
 
-export {Home, Example, Questions, Tags, Users, SignUp, Login, Detail, Write}
+export {Home, Example, Questions, Tags, Users, SignUp, Login, Detail, Write, Edit}
