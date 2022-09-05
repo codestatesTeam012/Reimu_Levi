@@ -6,6 +6,7 @@ interface Post {
   postsId: number
   title: string
   content: string
+  view: number
 }
 
 export const getPostThunk = createAsyncThunk<Post, number, CreateAsyncThunkTypes>(

@@ -5,6 +5,7 @@ export interface Post {
   postsId: number
   title: string
   content: string
+  view: number
 }
 
 export interface IPost {
