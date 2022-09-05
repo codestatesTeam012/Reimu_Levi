@@ -20,12 +20,11 @@ const Questions = () => {
   const user = getUser()
   const {posts, isLoading, pageInfo} = useAppSelector((state: RootState) => state.posts)
   const [currentPage, setCurrentPage] = useState(1)
-  console.log(posts)
+
   useEffect(() => {
     dispatch(getPostsThunk(currentPage))
   }, [currentPage])
 
-  console.log(pageInfo)
   if (isLoading) return <div>Loading...</div>
 
   return (
