@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {SERVER_URL} from '.'
 
-const postAPI = axios.create({baseURL: SERVER_URL, timeout: 1000})
+const postAPI = axios.create({baseURL: SERVER_URL, timeout: 5000})
 
 export const getPosts = async (pageNum: number) => {
   try {
