@@ -80,7 +80,7 @@ const Detail = () => {
             </div>
             <div>
               <h3>Viewed</h3>
-              <span>today</span>
+              <span>{post.view}</span>
             </div>
           </SubBox>
         </Header>
