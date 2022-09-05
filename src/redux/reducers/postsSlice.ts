@@ -5,6 +5,9 @@ export interface Post {
   postsId: number
   title: string
   content: string
+  tags: {
+    tagList: string
+  }[]
 }
 
 export interface PageInfo {

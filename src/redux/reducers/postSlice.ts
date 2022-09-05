@@ -6,6 +6,9 @@ export interface Post {
   title: string
   content: string
   view: number
+  tags: {
+    tagList: string
+  }[]
 }
 
 export interface IPost {
