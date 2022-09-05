@@ -28,6 +28,7 @@ const Detail = () => {
   const [content, setContent] = useState('')
   const navigate = useNavigate()
 
+  console.log(post)
   useEffect(() => {
     dispatch(getPostThunk(Number(id)))
   }, [])
@@ -80,7 +81,7 @@ const Detail = () => {
             </div>
             <div>
               <h3>Viewed</h3>
-              <span>today</span>
+              <span>{post.view}</span>
             </div>
           </SubBox>
         </Header>
@@ -97,8 +98,8 @@ const Detail = () => {
               <MainContent>
                 <MarkDownPreview content={post.content} />
                 <Tags>
-                  {TagsArr.map((tag) => (
-                    <TagCard tag={tag} key={tag} />
+                  {post.tags.map((obj: any) => (
+                    <TagCard tag={obj.tagList} key={obj.tagList} />
                   ))}
                 </Tags>
                 <BottomContent>

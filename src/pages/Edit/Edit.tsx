@@ -10,6 +10,7 @@ import {useNavigate, useParams} from 'react-router-dom'
 import {RootState, useAppDispatch, useAppSelector} from 'src/redux/store'
 import {getPostThunk} from 'src/redux/thunkActions/postAction'
 import {authPostService} from 'src/apis/AuthPostAPI'
+import TagCard from 'src/components/TagCard/TagCard'
 
 const Edit = () => {
   const navigate = useNavigate()
@@ -24,12 +25,30 @@ const Edit = () => {
 
   const {post, isLoading} = useAppSelector((state: RootState) => state.post)
 
+  const TagList = post?.tags.map((obj) => obj.tagList)
+  console.log(TagList)
+
+  const [tags, setTags] = useState<any>(TagList)
+
   const [title, setTitle] = useState(post?.title)
   const [content, setContent] = useState('')
+
+  const handleTagDelete = (tag: string) => {
+    const filteredTags = tags?.filter((tagItem: string) => tagItem !== tag)
+    if (filteredTags) setTags(filteredTags)
+  }
 
   useEffect(() => {
     dispatch(getPostThunk(Number(id)))
   }, [])
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.code === 'Space') {
+      console.log(e.currentTarget.value)
+      setTags([...tags, e.currentTarget.value])
+      e.currentTarget.value = ''
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -40,7 +59,9 @@ const Edit = () => {
       username: user.username,
       title,
       content,
+      tags,
     }
+
     const result = await authPostService.editPost(post?.postsId, form)
     if (result.status === 200) {
       navigate('/questions')
@@ -106,10 +127,18 @@ const Edit = () => {
                         <Help />
                       </TagsHelp>
                     </TagsWrapper>
+                    <TagInfo>
+                      {tags?.map((tag: string) => (
+                        <div key={tag} onClick={() => handleTagDelete(tag)}>
+                          <TagCard tag={tag} />
+                        </div>
+                      ))}
+                    </TagInfo>
                     <EditorInput
                       type="text"
                       name="tags"
                       placeholder="e.g. (ruby-on-rails .net sql-server"
+                      onKeyUp={handleKeyDown}
                     />
                   </EditorContentWrapper>
                 </Editor>
@@ -291,6 +320,10 @@ const Postic = styled.div`
     0 2px 8px hsla(0, 0%, 0%, 0.05);
   border-radius: 3px;
   border: solid 1px hsl(210, 8%, 85%);
+`
+
+const TagInfo = styled.div`
+  display: flex;
 `
 
 const contents1 = [

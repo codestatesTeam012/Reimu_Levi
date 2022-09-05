@@ -5,6 +5,10 @@ export interface Post {
   postsId: number
   title: string
   content: string
+  view: number
+  tags: {
+    tagList: string
+  }[]
 }
 
 export interface IPost {

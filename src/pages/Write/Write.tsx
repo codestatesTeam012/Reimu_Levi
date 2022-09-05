@@ -8,6 +8,7 @@ import Help from 'src/assets/svgComponents/Help'
 import {getUser} from 'src/utils/localstorage'
 import {authPostService} from 'src/apis/AuthPostAPI'
 import {useNavigate} from 'react-router-dom'
+import TagCard from 'src/components/TagCard/TagCard'
 
 const Write = () => {
   const navigate = useNavigate()
@@ -16,8 +17,27 @@ const Write = () => {
     window.alert('로그인 후 사용해 주세요.')
   }
   const [content, setContent] = useState('')
+  const [tags, setTags] = useState<string[]>([])
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (tags.length >= 3) return window.alert('태그는 최대 3개 까지 입력가능합니다.')
+    if (e.code === 'Space') {
+      console.log(e.currentTarget.value)
+      setTags([...tags, e.currentTarget.value])
+      e.currentTarget.value = ''
+    }
+  }
+
+  const handleTagDelete = (tag: string) => {
+    const filteredTags = tags.filter((tagItem) => tagItem !== tag)
+    setTags(filteredTags)
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    console.log(e)
+
+    if (tags.length === 0) return window.alert('태그는 1개 이상 작성하셔야 합니다.')
 
     const formdata = new FormData(e.currentTarget)
     const title = String(formdata.get('title'))
@@ -25,31 +45,17 @@ const Write = () => {
     const form = {
       title,
       content,
+      tags,
       username: user.username,
     }
+
+    console.log(form)
+
     const result = await authPostService.writePost(form)
     if (result.status === 201) navigate('/questions')
-  }
 
-  const contents1 = [
-    {icon: Pen, content: '1. Summarize the problem'},
-    {icon: Pen, content: "2. Describe what you've tried"},
-    {icon: Pen, content: '3. Show some code'},
-  ]
-  const contents2 = [
-    {icon: Pen, content: 'Super user : Troubleshooting hardware and software issues'},
-    {
-      icon: Pen,
-      content: 'Software engineering : For software development methods and process questions',
-    },
-    {icon: Pen, content: 'Hardware recommendations'},
-    {icon: Pen, content: 'Software recommendations'},
-    {icon: Pen, content: 'Ask questions about the site on meta'},
-  ]
-  const contents3 = [
-    {icon: Pen, content: 'Find more information about how to ask a good question here'},
-    {icon: Pen, content: 'Visit the help center'},
-  ]
+    return false
+  }
 
   return (
     <Layout>
@@ -106,14 +112,25 @@ const Write = () => {
                         <Help />
                       </TagsHelp>
                     </TagsWrapper>
-                    <EditorInput
-                      type="text"
-                      name="tags"
-                      placeholder="e.g. (ruby-on-rails .net sql-server"
-                    />
+                    <TagInfo>
+                      {tags.map((tag) => (
+                        <div onClick={() => handleTagDelete(tag)} key={tag}>
+                          <TagCard tag={tag} />
+                        </div>
+                      ))}
+                    </TagInfo>
+                    <div>
+                      <input type="hidden" />
+                      <EditorInput
+                        type="text"
+                        name="tags"
+                        placeholder="e.g. (ruby-on-rails .net sql-server"
+                        onKeyDown={handleKeyDown}
+                      />
+                    </div>
                   </EditorContentWrapper>
                 </Editor>
-                <EditorButton>Post your question</EditorButton>
+                <EditorButton type="submit">Post your question</EditorButton>
               </EditorForm>
             </MainEditor>
             <MainSide>
@@ -292,3 +309,27 @@ const Postic = styled.div`
   border-radius: 3px;
   border: solid 1px hsl(210, 8%, 85%);
 `
+
+const TagInfo = styled.div`
+  display: flex;
+`
+
+const contents1 = [
+  {icon: Pen, content: '1. Summarize the problem'},
+  {icon: Pen, content: "2. Describe what you've tried"},
+  {icon: Pen, content: '3. Show some code'},
+]
+const contents2 = [
+  {icon: Pen, content: 'Super user : Troubleshooting hardware and software issues'},
+  {
+    icon: Pen,
+    content: 'Software engineering : For software development methods and process questions',
+  },
+  {icon: Pen, content: 'Hardware recommendations'},
+  {icon: Pen, content: 'Software recommendations'},
+  {icon: Pen, content: 'Ask questions about the site on meta'},
+]
+const contents3 = [
+  {icon: Pen, content: 'Find more information about how to ask a good question here'},
+  {icon: Pen, content: 'Visit the help center'},
+]
