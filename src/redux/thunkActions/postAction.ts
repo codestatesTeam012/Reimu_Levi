@@ -2,6 +2,14 @@ import {createAsyncThunk} from '@reduxjs/toolkit'
 import {viewPostService} from 'src/apis/ViewPostAPI'
 import {CreateAsyncThunkTypes} from '../store'
 
+interface RepliesProps {
+  replyId: number
+  member: {
+    username: string
+  }
+  content: string
+}
+
 interface Post {
   postsId: number
   title: string
@@ -10,6 +18,7 @@ interface Post {
   tags: {
     tagList: string
   }[]
+  replies: RepliesProps[]
 }
 
 export const getPostThunk = createAsyncThunk<Post, number, CreateAsyncThunkTypes>(

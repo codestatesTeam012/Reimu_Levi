@@ -21,3 +21,7 @@ export interface IWrite {
   content: string
   username: string
 }
+
+export interface ICommentWrite {
+  content: string
+}
