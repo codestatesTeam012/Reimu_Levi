@@ -4,9 +4,9 @@ import {CreateAsyncThunkTypes} from '../store'
 
 interface RepliesProps {
   replyId: number
-  member: {
-    username: string
-  }
+
+  username: string
+
   content: string
 }
 

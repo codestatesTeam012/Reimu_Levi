@@ -3,9 +3,7 @@ import {getPostThunk} from '../thunkActions/postAction'
 
 export interface RepliesProps {
   replyId: number
-  member: {
-    username: string
-  }
+  username: string
   content: string
 }
 export interface Post {
