@@ -53,7 +53,6 @@ const Detail = () => {
       return window.alert('로그인 후 사용해 주세요.')
     }
     const form = {
-      // username: user.username,
       content,
     }
 
@@ -61,7 +60,7 @@ const Detail = () => {
     if (result.status === 201) {
       setContent('')
     }
-    // navigate(`/questions/${id}`)
+
     window.location.replace(`/questions/${id}`)
   }
 
@@ -83,7 +82,12 @@ const Detail = () => {
               text="Ask Questions"
               width={11}
               onClick={() => {
-                navigate('/write')
+                if (!user) {
+                  window.alert('로그인 후 사용해 주세요.')
+                  navigate('/login')
+                } else {
+                  navigate('/write')
+                }
               }}
             />
           </TitleBox>
@@ -136,9 +140,9 @@ const Detail = () => {
             </Quesionts>
             <CommentInfoWord>Add a comment</CommentInfoWord>
             <MainAnswer>Answer(s)</MainAnswer>
-            {post.replies.map((reply, idx) => {
+            {post.replies.map((reply) => {
               return (
-                <CommentWrapper key={idx}>
+                <CommentWrapper key={reply.replyId}>
                   <Quesionts>
                     <UtilIcons>
                       <UpDownIcon mode="up" />
@@ -159,7 +163,7 @@ const Detail = () => {
                             </>
                           ) : null}
                         </ShareInfo>
-                        <UserInfo>{reply.member.username}</UserInfo>
+                        <UserInfo>{reply.username}</UserInfo>
                       </BottomContent>
                     </MainContent>
                   </Quesionts>
