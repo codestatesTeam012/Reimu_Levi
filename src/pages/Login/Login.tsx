@@ -118,6 +118,12 @@ const LoginForm = styled.form`
     height: 3.7rem;
     border: solid 1px lightgray;
     border-radius: 3px;
+
+    :focus {
+      border: 3px solid rgb(48, 130, 197);
+      outline: 4px solid rgb(223, 238, 249);
+      outline-offset: -2px;
+    }
   }
 `
 
