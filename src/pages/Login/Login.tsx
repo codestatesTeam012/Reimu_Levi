@@ -31,7 +31,7 @@ const Login = () => {
         <SocialButton />
         <LoginBox>
           <LoginForm onSubmit={handleSubmit}>
-            <label>UserName</label>
+            <label>User Name</label>
             <input type="text" name="username" />
             <LabelBox>
               <label>Password</label>
@@ -65,6 +65,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
 `
 
 const Blank = styled.div`

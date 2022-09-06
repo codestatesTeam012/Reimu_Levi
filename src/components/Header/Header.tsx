@@ -44,7 +44,6 @@ const Header = () => {
           ))}
         </TopMenu>
         <SearchBar />
-
         <ButtonBox>
           {user ? (
             <AuthButton mode="SignUp" text="Log out" onClick={HandelLogOut} />
