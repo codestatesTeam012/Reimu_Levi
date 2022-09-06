@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import TextBalloonLeft from '../../components/TextBalloon/TextBalloonLeft'
 import TextBalloonRight from 'src/components/TextBalloon/TextBalloonRight'
-import Footer from 'src/components/Footer'
+import Footer from 'src/components/Footer/Footer'
 
 type Record = {
   recordNumber: string
