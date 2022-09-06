@@ -82,6 +82,8 @@ const QuestionsBox = styled.div`
   display: flex;
   height: 100%;
   width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
 
   @media (max-width: 1100px) {
     flex-direction: column;

@@ -11,7 +11,7 @@ import SearchBar from './SearchBar'
 const TopMenuItem = [
   {name: 'About', link: '/'},
   {name: 'Products', link: '/'},
-  {name: 'ForTeams', link: '/'},
+  {name: 'For Teams', link: '/'},
 ]
 
 const Header = () => {
@@ -47,7 +47,7 @@ const Header = () => {
 
         <ButtonBox>
           {user ? (
-            <AuthButton mode="SignUp" text="LogOut" onClick={HandelLogOut} />
+            <AuthButton mode="SignUp" text="Log out" onClick={HandelLogOut} />
           ) : (
             <>
               <AuthButton mode="Login" text="Log in" onClick={() => navigate('/login')} />
@@ -76,6 +76,8 @@ const Container = styled.div`
   background-color: hsl(210, 8%, 97.5%);
   box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05),
     0 2px 8px hsla(0, 0%, 0%, 0.05);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
 `
 const SubContainer = styled.div`
   width: 130rem;
