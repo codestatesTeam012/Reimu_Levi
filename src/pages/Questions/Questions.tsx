@@ -20,12 +20,11 @@ const Questions = () => {
   const user = getUser()
   const {posts, isLoading, pageInfo} = useAppSelector((state: RootState) => state.posts)
   const [currentPage, setCurrentPage] = useState(1)
-  console.log(posts)
+
   useEffect(() => {
     dispatch(getPostsThunk(currentPage))
   }, [currentPage])
 
-  console.log(pageInfo)
   if (isLoading) return <div>Loading...</div>
 
   return (
@@ -83,6 +82,8 @@ const QuestionsBox = styled.div`
   display: flex;
   height: 100%;
   width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
 
   @media (max-width: 1100px) {
     flex-direction: column;

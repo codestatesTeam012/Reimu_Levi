@@ -12,10 +12,11 @@ const TagCard = ({tag}: Props) => {
 export default TagCard
 
 const TagBox = styled.p`
-  font-size: 1.3rem;
-  background-color: hsl(205, 46%, 92%);
-  color: hsl(205, 47%, 42%);
+  font-size: 1rem;
+  background-color: rgb(225, 236, 244);
+  color: rgb(57, 115, 157);
   padding: 0.5rem;
-  margin: 0.4rem;
+  margin: 0.4rem 0.4rem 0.4rem 0;
+  border-radius: 0.3rem;
   cursor: pointer;
 `

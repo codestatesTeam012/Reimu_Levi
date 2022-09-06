@@ -16,7 +16,7 @@ const Home = () => {
       recordText: 'monthly visitors to Stack Overflow &amp; Stack Exchange',
     },
     {
-      recordNumber: '45.1 billion',
+      recordNumber: '45.1+ billion',
       recordText: 'Times a developer got help since 2008',
     },
     {

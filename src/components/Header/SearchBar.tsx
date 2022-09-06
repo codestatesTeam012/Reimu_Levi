@@ -20,6 +20,7 @@ const Container = styled.div`
   flex-grow: 1;
   position: relative;
   display: flex;
+  margin-right: 0.5rem;
 
   @media (max-width: 740px) {
     display: none;
@@ -27,8 +28,10 @@ const Container = styled.div`
 `
 
 const SearchInput = styled.input`
-  padding: 1rem 0 1rem 5rem;
+  padding: 0.8rem 0 0.8rem 5rem;
   width: 100%;
+  border: 1px solid hsl(210, 8%, 75%);
+  border-radius: 0.3rem;
 
   ::placeholder {
     color: rgb(207, 204, 204);

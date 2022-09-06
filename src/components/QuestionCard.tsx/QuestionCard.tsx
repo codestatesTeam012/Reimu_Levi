@@ -10,7 +10,6 @@ interface Props {
 }
 
 const QuestionCard = ({post}: Props) => {
-  const TagsArr = ['javascript', 'jquery', 'pageshow']
   const navigate = useNavigate()
   const result = parse(post.content)
   return (
@@ -33,8 +32,8 @@ const QuestionCard = ({post}: Props) => {
         <Content>{result}</Content>
         <MetaBox>
           <Tags>
-            {TagsArr.map((tag) => (
-              <TagCard tag={tag} key={tag} />
+            {post.tags.map((tag, idx) => (
+              <TagCard tag={tag.tagList} key={idx} />
             ))}
           </Tags>
           <UserInfo>

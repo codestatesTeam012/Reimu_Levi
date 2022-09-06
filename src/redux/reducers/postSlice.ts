@@ -1,10 +1,22 @@
 import {createSlice} from '@reduxjs/toolkit'
 import {getPostThunk} from '../thunkActions/postAction'
 
+export interface RepliesProps {
+  replyId: number
+  member: {
+    username: string
+  }
+  content: string
+}
 export interface Post {
   postsId: number
   title: string
   content: string
+  view: number
+  tags: {
+    tagList: string
+  }[]
+  replies: RepliesProps[]
 }
 
 export interface IPost {

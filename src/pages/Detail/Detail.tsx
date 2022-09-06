@@ -19,6 +19,7 @@ import {getUser} from 'src/utils/localstorage'
 import {RootState, useAppDispatch, useAppSelector} from 'src/redux/store'
 import {getPostThunk} from 'src/redux/thunkActions/postAction'
 import {authPostService} from 'src/apis/AuthPostAPI'
+import {v4 as uuidv4} from 'uuid'
 
 const Detail = () => {
   const {id} = useParams()
@@ -46,17 +47,28 @@ const Detail = () => {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const user = getUser()
     if (!user) {
       return window.alert('로그인 후 사용해 주세요.')
     }
     const form = {
-      username: user.username,
+      // username: user.username,
       content,
     }
-    console.log('CommentForm', form)
+
+    const result = await authPostService.writeComment(Number(id), form)
+    if (result.status === 201) {
+      setContent('')
+    }
+    // navigate(`/questions/${id}`)
+    window.location.replace(`/questions/${id}`)
+  }
+
+  const handleDeleteComment = async (replyId: number) => {
+    const result = await authPostService.deleteComment(Number(replyId))
+    if (result.status === 204) window.location.replace(`/questions/${id}`)
   }
 
   if (isLoading || !post) return <div>로딩중 입니다</div>
@@ -67,7 +79,14 @@ const Detail = () => {
         <Header>
           <TitleBox>
             <h1>{post.title}</h1>
-            <AuthButton mode="SignUp" text="Ask Questions" width={11} />
+            <AuthButton
+              mode="SignUp"
+              text="Ask Questions"
+              width={11}
+              onClick={() => {
+                navigate('/write')
+              }}
+            />
           </TitleBox>
           <SubBox>
             <div>
@@ -80,7 +99,7 @@ const Detail = () => {
             </div>
             <div>
               <h3>Viewed</h3>
-              <span>today</span>
+              <span>{post.view}</span>
             </div>
           </SubBox>
         </Header>
@@ -97,8 +116,8 @@ const Detail = () => {
               <MainContent>
                 <MarkDownPreview content={post.content} />
                 <Tags>
-                  {TagsArr.map((tag) => (
-                    <TagCard tag={tag} key={tag} />
+                  {post.tags.map((obj: any) => (
+                    <TagCard tag={obj.tagList} key={obj.tagList} />
                   ))}
                 </Tags>
                 <BottomContent>
@@ -117,11 +136,43 @@ const Detail = () => {
               </MainContent>
             </Quesionts>
             <CommentInfoWord>Add a comment</CommentInfoWord>
+            <MainAnswer>Answer(s)</MainAnswer>
+            {post.replies.map((reply, idx) => {
+              return (
+                <CommentWrapper key={uuidv4()}>
+                  <Quesionts>
+                    <UtilIcons>
+                      <UpDownIcon mode="up" />
+                      <Count>0</Count>
+                      <UpDownIcon mode="down" />
+                      <BackClock />
+                    </UtilIcons>
+                    <MainContent>
+                      <MarkDownPreview content={reply.content} />
+                      <BottomContent>
+                        <ShareInfo>
+                          <span>Share</span>
+                          <span>Follow</span>
+                          {user ? (
+                            <>
+                              <span onClick={() => handleDeleteComment(reply.replyId)}>Delete</span>
+                              <span>Edit</span>
+                            </>
+                          ) : null}
+                        </ShareInfo>
+                        <UserInfo>{reply.member.username}</UserInfo>
+                      </BottomContent>
+                    </MainContent>
+                  </Quesionts>
+                  <CommentInfoWord>Add a comment</CommentInfoWord>
+                </CommentWrapper>
+              )
+            })}
             <CommentInfo>
               Know someone who can answer? Share a link to this <span>question</span>
               via <span> email</span>, <span>Twitter</span>, or <span>Facebook</span>. Your Answer
             </CommentInfo>
-            <CommentBox>커멘트 ~</CommentBox>
+            <CommentBox />
             <CommentForm onSubmit={handleSubmit}>
               <MarkdownEditor placeholder="Start typing...">
                 <OnChangeHTML onChange={handleEditorChangeHTML} />
@@ -146,7 +197,10 @@ const Detail = () => {
 
 export default Detail
 
-const Container = styled.div``
+const Container = styled.div`
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'Open Sans', 'Helvetica Neue', sans-serif;
+`
 
 const Header = styled.div`
   margin: 2rem 2rem;
@@ -208,6 +262,11 @@ const MainContent = styled.div`
   width: 65.9rem;
 `
 
+const MainAnswer = styled.h1`
+  font-size: 2rem;
+  margin: 5rem 0 1rem 1.5rem;
+`
+
 const Tags = styled.div`
   margin-top: 1.5rem;
   display: flex;
@@ -224,13 +283,19 @@ const ShareInfo = styled.div`
 
   span {
     margin-left: 1rem;
-    font-size: 1.5rem;
-    color: gray;
+    font-size: 1.3rem;
+    color: rgb(139, 145, 153);
     cursor: pointer;
   }
 `
 const UserInfo = styled.div`
   font-size: 1.3rem;
+  color: rgb(74, 144, 215);
+`
+
+const CommentWrapper = styled.div`
+  border-bottom: 1px solid rgb(222, 222, 222);
+  padding: 2rem 0;
 `
 
 const Quesionts = styled.div`
@@ -242,20 +307,22 @@ const Postic = styled.div`
   box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.05), 0 1px 4px hsla(0, 0%, 0%, 0.05),
     0 2px 8px hsla(0, 0%, 0%, 0.05);
   border-radius: 3px;
-  border: solid 1px hsl(210, 8%, 85%);
+  border: solid 1px rgb(214, 217, 220);
 `
 
 const CommentInfoWord = styled.p`
-  margin-top: 8rem;
+  margin-top: 2rem;
   margin-left: 7rem;
-  color: hsl(210, 8%, 55%);
+  color: rgb(181, 186, 191);
   font-size: 1.3rem;
+  cursor: pointer;
 `
 
 const CommentInfo = styled.p`
   margin-top: 4rem;
   color: black;
   font-size: 1.7rem;
+  line-height: 3rem;
 
   span {
     color: hsl(206, 100%, 40%);
