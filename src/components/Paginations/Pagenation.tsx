@@ -35,7 +35,6 @@ function Pagination({totalPage, currentPage, setCurrentPage, split, jump}: Props
   const {start, end} = PageMode[currentMode(currentPage)]
 
   const makeButtons = (totalPage: number) => {
-    console.log('렌더링')
     const ButtonsNumArr = []
     for (let i = 1; i < totalPage + 1; i++) {
       ButtonsNumArr.push(i)

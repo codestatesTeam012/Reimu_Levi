@@ -1,4 +1,5 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 import {Link, NavLink} from 'react-router-dom'
 import CollectorDiscover from 'src/assets/svgComponents/CollectorDiscover'
 import Globe from 'src/assets/svgComponents/Globe'
@@ -12,6 +13,8 @@ interface Props {
 }
 
 const LeftSideBar = ({isOpen, top}: Props) => {
+  const navigate = useNavigate()
+
   return (
     <LeftSideBarBox top={top}>
       <LeftNavBar isOpen={isOpen}>
@@ -36,7 +39,7 @@ const LeftSideBar = ({isOpen, top}: Props) => {
                   <NavLink to="/Users">Users</NavLink>
                 </li>
                 <li className="ps-relative">
-                  <NavLink to="Companies">Companies</NavLink>
+                  <NavLink to="/Companies">Companies</NavLink>
                 </li>
                 <li className="tow-li-title">COLLECTIVES</li>
                 <li className="ps-relative-title">
@@ -66,6 +69,9 @@ const LeftSideBar = ({isOpen, top}: Props) => {
                       width="18"
                       height="3"
                       fontSize={1.5}
+                      onClick={() => {
+                        navigate('/signup')
+                      }}
                     />
                   </div>
                 </div>

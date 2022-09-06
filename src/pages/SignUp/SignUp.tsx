@@ -110,11 +110,11 @@ const SignUp = () => {
           </SignUpForm>
           <RightSectionBottom>
             <RightSectionBottomInfo>
-              Already have an account? <span>Log in</span>
+              Already have an account? <span onClick={() => navigate('/login')}>Log in</span>
             </RightSectionBottomInfo>
             <RightSectionBottomInfo>
               Are you an employer?{' '}
-              <span>
+              <span onClick={() => navigate('/')}>
                 Sign up on Talent <Share />
               </span>
             </RightSectionBottomInfo>

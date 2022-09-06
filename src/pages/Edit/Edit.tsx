@@ -26,7 +26,6 @@ const Edit = () => {
   const {post, isLoading} = useAppSelector((state: RootState) => state.post)
 
   const TagList = post?.tags.map((obj) => obj.tagList)
-  console.log(TagList)
 
   const [tags, setTags] = useState<any>(TagList)
 

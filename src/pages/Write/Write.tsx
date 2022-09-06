@@ -22,7 +22,6 @@ const Write = () => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (tags.length >= 3) return window.alert('태그는 최대 3개 까지 입력가능합니다.')
     if (e.code === 'Space') {
-      console.log(e.currentTarget.value)
       setTags([...tags, e.currentTarget.value])
       e.currentTarget.value = ''
     }
@@ -35,7 +34,6 @@ const Write = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(e)
 
     if (tags.length === 0) return window.alert('태그는 1개 이상 작성하셔야 합니다.')
 
@@ -48,8 +46,6 @@ const Write = () => {
       tags,
       username: user.username,
     }
-
-    console.log(form)
 
     const result = await authPostService.writePost(form)
     if (result.status === 201) navigate('/questions')
