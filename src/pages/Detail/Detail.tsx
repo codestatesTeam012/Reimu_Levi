@@ -19,7 +19,6 @@ import {getUser} from 'src/utils/localstorage'
 import {RootState, useAppDispatch, useAppSelector} from 'src/redux/store'
 import {getPostThunk} from 'src/redux/thunkActions/postAction'
 import {authPostService} from 'src/apis/AuthPostAPI'
-import {v4 as uuidv4} from 'uuid'
 
 const Detail = () => {
   const {id} = useParams()
@@ -139,7 +138,7 @@ const Detail = () => {
             <MainAnswer>Answer(s)</MainAnswer>
             {post.replies.map((reply, idx) => {
               return (
-                <CommentWrapper key={uuidv4()}>
+                <CommentWrapper key={idx}>
                   <Quesionts>
                     <UtilIcons>
                       <UpDownIcon mode="up" />
